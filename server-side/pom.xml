@@ -17,6 +17,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>micro</module>
+        <module>api-gateway</module>
+        <module>discovery-server</module>
     </modules>
 
     <properties>
