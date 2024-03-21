@@ -9,5 +9,5 @@ import java.util.*;
 @UpdateComponent
 @CompilationComponent
 @Repository
-public interface ProductRepository extends TRepo<ProductModel, Integer> {
+public interface ReviewRepository extends TRepo<ReviewModel, Integer> {
 }
