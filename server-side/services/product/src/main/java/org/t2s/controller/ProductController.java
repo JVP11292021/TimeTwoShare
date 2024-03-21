@@ -15,30 +15,26 @@ import java.util.*;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/t2s/v1/product/")
-public class ProductController implements TControllerCRUD<Integer, ProductDto, ProductModel> {
+public class ProductController implements TControllerEntityResponseWildcard<Integer, ProductDto, ProductModel> {
 	private final ProductService productService;
 	@Override
 	@PostMapping
-	@ResponseStatus(HttpStatus.ACCEPTED)
-	public int insertEntity(ProductDto productdto) {
-		 return productService.insert(productdto);
+	public ResponseEntity<?> insertEntity(ProductDto productdto) {
+		 return ResponseEntity.ok(productService.insert(productdto));
 	}
 	@Override
 	@GetMapping
-	@ResponseStatus(HttpStatus.OK)
-	public List<ProductDto> getAllEntities() {
-		 return productService.getAll();
+	public ResponseEntity<?> getAllEntities() {
+		 return ResponseEntity.ok(productService.getAll());
 	}
 	@Override
 	@DeleteMapping
-	@ResponseStatus(HttpStatus.FOUND)
-	public boolean removeEntityById(Integer id) {
-		 return productService.removeById(id);
+	public ResponseEntity<?> removeEntityById(Integer id) {
+		 return ResponseEntity.ok(productService.removeById(id));
 	}
 	@Override
 	@PutMapping
-	@ResponseStatus(HttpStatus.OK)
-	public boolean updateEntity(Integer id, ProductModel productmodel) {
-		 return productService.update(id, productmodel);
+	public ResponseEntity<?> updateEntity(Integer id, ProductModel productmodel) {
+		 return ResponseEntity.ok(productService.update(id, productmodel));
 	}
 }
