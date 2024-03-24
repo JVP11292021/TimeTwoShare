@@ -14,7 +14,7 @@ import java.util.*;
 @Data
 @AllArgsConstructor
 @RestController
-@RequestMapping("/t2s/v1/product/")
+@RequestMapping("/t2s/v1/product/storage")
 public class ProductController implements TControllerEntityResponseWildcard<Integer, ProductDto, ProductModel> {
 	private final ProductService productService;
 	@Override

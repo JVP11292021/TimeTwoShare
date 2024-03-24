@@ -15,7 +15,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import java.io.UnsupportedEncodingException;
 
 @EnableRestConfiguration(useCustomGenerationStrategy = true)
-@GenProperties(basePackage = "org.t2s", indexColumnType = Generic.INTEGER, apiName = "Product", endpoint = "/t2s/v1/product/")
+@GenProperties(basePackage = "org.t2s", indexColumnType = Generic.INTEGER,
+        apiName = "Product", endpoint = "/t2s/v1/product/storage")
 @GenDto
 @GenModel(tableName = "products", fields = { // TODO add manyToOne rel to User
         @FieldData(name = "name"),
