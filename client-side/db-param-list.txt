@@ -1,0 +1,39 @@
+[15:24] Berkum, Toby van
+gebruiker:
+  - verhuurder / huurder
+  - producten bekijken verhuurd / huur
+  - product toevoegen voor verhuur:
+    - naam
+    - beschrijving
+    - prijs
+    - categorie
+    - afbeelding
+  - product huren => overzicht
+  
+contract / transactie:
+  - verhuurder_id => gebruiker_id
+  - huurder_id => gebruiker_id
+  - product_id
+  - startdatum
+  - einddatum
+  - prijs
+  
+Pagina's:
+  - producten die verhuurt worden (publiek):
+    - filteren
+    - sorteren
+    - persoon
+    - reviews (aantaal sterren)
+    - verzoek tot huren (knop)
+  - persoonlijke pagina (prive):
+    - producten die je verhuurt
+      * verzoeken
+    - producten die je huurt
+    - reviews die je hebt gekregen
+  - registreren:
+    - naam
+    - email
+    - wachtwoord
+  - inloggen:
+    - email
+    - wachtwoord
