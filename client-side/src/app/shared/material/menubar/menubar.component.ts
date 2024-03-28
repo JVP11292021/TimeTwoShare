@@ -50,9 +50,11 @@ export type MenubarConfig = {
 })
 export class MenubarComponent {
 
-  @Input() config: MenubarConfig = {
+  @Input() 
+  config: MenubarConfig = {
     title: 'Default Title'
   };
+  @Input() contentStyle: string = "text-align: center;min-height: 100vh;";
 
   public visible: MenubarVisible = new MenubarVisible();
 

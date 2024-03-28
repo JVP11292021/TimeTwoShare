@@ -42,7 +42,7 @@
         ></ng-container>
     </mat-drawer>
     <mat-drawer-content>
-        <div style="text-align: center;min-height: 600px;">
+        <div [style]=contentStyle>
             <ng-container
             *ngTemplateOutlet="
               content || defaultContent;
