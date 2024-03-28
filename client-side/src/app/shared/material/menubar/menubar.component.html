@@ -1,0 +1,53 @@
+<ng-template #defaultContent>
+    <router-outlet></router-outlet>
+</ng-template>
+
+<ng-template #defaultNav let-drawer>
+    <mat-nav-list>
+        <mat-list-item>
+            <button routerLink="#" mat-button><mat-icon>dashboard</mat-icon> Dashboard</button>
+        </mat-list-item>
+        <mat-list-item>
+            <button routerLink="#" mat-button><mat-icon>home</mat-icon> Home</button>
+        </mat-list-item>
+        <mat-list-item>
+            <button routerLink="#" mat-button><mat-icon>explore</mat-icon> Slider</button>
+        </mat-list-item>
+    </mat-nav-list>
+</ng-template>
+
+<ng-template #defaultHeader let-item></ng-template>
+
+<mat-toolbar *ngIf="config.complete === undefined || config.complete" color="primary" class="mat-elevation-z8">
+    <button (click)="drawer.toggle()" mat-icon-button>
+        <mat-icon>menu</mat-icon>
+    </button>
+    <span>{{config.title}}</span>
+    <span class="example-spacer"></span>
+    <ng-container
+    *ngTemplateOutlet="
+      header || defaultHeader;
+      context: { $implicit: visible }
+    "
+    ></ng-container>
+</mat-toolbar>
+
+<mat-drawer-container autosize>
+    <mat-drawer #drawer opened="true" mode="side" position="start">
+        <ng-container
+        *ngTemplateOutlet="
+         navigation || defaultNav;
+         context: { $implicit: drawer }
+        "
+        ></ng-container>
+    </mat-drawer>
+    <mat-drawer-content>
+        <div style="text-align: center;min-height: 600px;">
+            <ng-container
+            *ngTemplateOutlet="
+              content || defaultContent;
+            "
+            ></ng-container>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>
