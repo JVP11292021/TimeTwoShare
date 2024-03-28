@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -19,6 +20,7 @@ import org.t2s.auth.user.UserRepo;
 
 import java.io.IOException;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -40,6 +42,8 @@ public class AuthService {
         var savedUser = this.userRepo.save(user);
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
+        log.info("Saved user: {}", savedUser);
+        log.info("With access_token:{}, refresh_token:{}", jwtToken, refreshToken);
         saveUserToken(savedUser, jwtToken);
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
@@ -62,6 +66,7 @@ public class AuthService {
             var refreshToken = jwtService.generateRefreshToken(user);
             revokeAllUserTokens(user);
             saveUserToken(user, jwtToken);
+            log.info("Authenticated user:{}, access_token:{}, refresh_token:{}", user.getId(), jwtToken, refreshToken);
             return AuthenticationResponse.builder()
                     .accessToken(jwtToken)
                     .refreshToken(refreshToken)
@@ -129,6 +134,7 @@ public class AuthService {
                         .state(AuthTokenState.VALID)
                         .build();
                 new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
+                log.info("Tokens refreshed for user:{}", user.getId());
             }
         }
     }

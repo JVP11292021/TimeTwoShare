@@ -1,4 +1,4 @@
-[15:24] Berkum, Toby van
+
 gebruiker:
   - verhuurder / huurder
   - producten bekijken verhuurd / huur
@@ -30,7 +30,9 @@ Pagina's:
       * verzoeken
     - producten die je huurt
     - reviews die je hebt gekregen
-  - registreren:
+
+// Gefixt
+  - registreren: 
     - naam
     - email
     - wachtwoord

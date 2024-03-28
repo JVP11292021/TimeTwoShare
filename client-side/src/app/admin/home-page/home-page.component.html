@@ -1,1 +1,21 @@
-<p>home-page works!</p>
+<matexp-menubar class="h-full" [config]="{title: 'Time2Share Portal', complete:true}">
+    <ng-template matexpMenuBarHeader let-item>
+       <button mat-button><mat-icon>contact_phone</mat-icon>Contact</button>
+    </ng-template>
+    <ng-template matexpMenuBarNavigation>
+       <mat-nav-list>
+           <mat-list-item>
+               <button routerLink="products" mat-button><mat-icon>share</mat-icon> Products</button>
+           </mat-list-item>
+          <mat-list-item>
+              <button routerLink="my-products" mat-button><mat-icon>person</mat-icon> My Products</button>
+          </mat-list-item>
+          <mat-list-item>
+              <button routerLink="reviews" mat-button><mat-icon>description</mat-icon> Reviews</button>
+          </mat-list-item>
+      </mat-nav-list>
+    </ng-template>
+    <ng-template matexpMenuBarContent>
+       <router-outlet></router-outlet>
+    </ng-template>
+</matexp-menubar>
