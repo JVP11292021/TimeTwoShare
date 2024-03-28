@@ -50,43 +50,63 @@ export class AuthPageComponent {
 
 
   onLogin() {
-    if (this.loginForm.valid) {
-      const jwtToken : string = this.storage.getData(ACCESS_TOKEN_STORED_NAME);
-      this.auth.simpleAuthentication({
-        email: this.loginForm.value.email,
-        password: this.loginForm.value.password
-      })
-      .subscribe((response) => {
-        if (response.state == "VALID") {
-          this.storage.saveData(ACCESS_TOKEN_STORED_NAME, response.access_token);
-          this.storage.saveData(REFRESH_TOKEN_STORED_NAME, response.refresh_token);
-          this.router.navigateByUrl("/admin")
-        }
-        else {
-          this.auth.refreshAccessToken(this.storage.getData(REFRESH_TOKEN_STORED_NAME))
-          .subscribe((response) => 
-              this.auth.getLatestAccessTokenByEmail(this.loginForm.value.email)
-                .subscribe((response) => {
-                  if (response == "Invalid") this.invalid = true;
-                  else 
-                    this.auth.authenticate({
-                      email: this.loginForm.value.email,
-                      password: this.loginForm.value.password
-                    }, response)
-                    .subscribe((response) => {
-                      if (response.state == "VALID") {
-                        this.storage.saveData(ACCESS_TOKEN_STORED_NAME, response.access_token);
-                        this.storage.saveData(REFRESH_TOKEN_STORED_NAME, response.refresh_token);
-                        this.router.navigateByUrl("/admin")
-                      };
-                    });
-                },
-                (error) => this.invalid = true
-                ));
-        }
-      });
+    if (!this.loginForm.valid) {
       return;
     }
+  
+    const email = this.loginForm.value.email;
+    const password = this.loginForm.value.password;
+  
+    this.auth.simpleAuthentication({ email, password }).subscribe(response => {
+      if (response.state === "VALID") {
+        this.handleValidLogin(response);
+      } else {
+        this.handleInvalidLogin(email, password);
+      }
+    });
+  }
+  
+  private handleValidLogin(response: any) {
+    const accessToken = response.access_token;
+    const refreshToken = response.refresh_token;
+  
+    this.storage.saveData(ACCESS_TOKEN_STORED_NAME, accessToken);
+    this.storage.saveData(REFRESH_TOKEN_STORED_NAME, refreshToken);
+    this.router.navigateByUrl("/admin");
+  }
+  
+  private handleInvalidLogin(email: string, password: string) {
+    const refreshToken = this.storage.getData(REFRESH_TOKEN_STORED_NAME);
+  
+    this.auth.refreshAccessToken(refreshToken).subscribe(
+      refreshedResponse => {
+        this.auth.getLatestAccessTokenByEmail(email).subscribe(
+          tokenResponse => {
+            if (tokenResponse === "Invalid") {
+              this.invalid = true;
+            } else {
+              this.authenticateWithRefreshedToken(email, password, tokenResponse);
+            }
+          },
+          error => {
+            this.invalid = true;
+          }
+        );
+      },
+      error => {
+        this.invalid = true;
+      }
+    );
+  }
+  
+  private authenticateWithRefreshedToken(email: string, password: string, tokenResponse: any) {
+    this.auth.authenticate({ email, password }, tokenResponse).subscribe(
+      response => {
+        if (response.state === "VALID") {
+          this.handleValidLogin(response);
+        }
+      }
+    );
   }
 
   navigateToRegister() {
