@@ -1,14 +1,14 @@
 import { Route } from "@angular/router";
-import { LoginPageComponent } from "../auth/components/login-page/login-page.component";
-import { SingInPageComponent } from "../auth/components/sing-in-page/sing-in-page.component";
+import { AuthPageComponent } from "./components/auth-page/auth-page.component";
+import { RegisterPageComponent } from "./components/sign-in-page/register-page.component";
 
 export const authRoutes: Route[] = [
     {
         path: '',
-        component: LoginPageComponent
+        component: AuthPageComponent
     },
     {
-        path: 'sign-in',
-        component: SingInPageComponent
+        path: 'register',
+        component: RegisterPageComponent
     }
 ]
