@@ -14,6 +14,7 @@ import java.util.*;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/t2s/v1/review")
+@CrossOrigin("http://localhost:4200")
 public class ReviewController implements TControllerEntityResponseWildcard<Long, ReviewDto, ReviewModel> {
 	private final ReviewService reviewService;
 	@Override

@@ -4,16 +4,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/t2s/v1/auth")
+@CrossOrigin("http://localhost:4200")
 public class AuthenticationController {
 
     private final AuthService authService;
@@ -26,6 +24,11 @@ public class AuthenticationController {
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok(this.authService.authenticate(request));
+    }
+
+    @GetMapping("/{email}")
+    public ResponseEntity<String> getActiveAccessTokenByEmail(@PathVariable("email") String userEmail) {
+        return ResponseEntity.ok(this.authService.getActiveAccessToken(userEmail));
     }
 
     @PostMapping("/refresh-token")

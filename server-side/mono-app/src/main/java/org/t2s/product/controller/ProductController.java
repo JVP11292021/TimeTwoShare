@@ -14,6 +14,7 @@ import java.util.*;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/t2s/v1/product")
+@CrossOrigin("http://localhost:4200")
 public class ProductController implements TControllerEntityResponseWildcard<Long, ProductDto, ProductModel> {
 	private final ProductService productService;
 	@Override

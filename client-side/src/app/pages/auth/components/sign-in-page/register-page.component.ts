@@ -7,6 +7,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { PersistanceStorageService } from 'src/app/shared/services/persistance-storage.service';
+import { ACCESS_TOKEN_STORED_NAME, REFRESH_TOKEN_STORED_NAME } from 'src/app/shared/globals';
 
 @Component({
   selector: 'app-sing-in-page',
@@ -30,8 +33,8 @@ export class RegisterPageComponent {
 
   private fb: FormBuilder = inject(FormBuilder);
   private router: Router = inject(Router);
-
-  private isSignedIn: boolean = false;
+  private auth: AuthService = inject(AuthService);
+  private storage: PersistanceStorageService = inject(PersistanceStorageService);
 
   public hide: boolean = true;
 
@@ -43,10 +46,20 @@ export class RegisterPageComponent {
   })
 
   onRegister() {
-    this.isSignedIn = this.registerForm.valid;
-    if (this.isSignedIn) {
-      console.log(this.registerForm.value);
-      this.router.navigateByUrl('/home');
+    if (this.registerForm.valid) {
+      const value = this.registerForm.value;
+      this.auth.register({
+        firstname: value.firstname,
+        lastname: value.lastname,
+        email: value.email,
+        password: value.password,
+        role: 'USER'
+      })
+      .subscribe((response) => {
+        this.storage.saveData(ACCESS_TOKEN_STORED_NAME, response.access_token);
+        this.storage.saveData(REFRESH_TOKEN_STORED_NAME, response.refresh_token);
+        this.navigateToLogin();
+      });
     }
   }
 
