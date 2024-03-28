@@ -1,7 +1,7 @@
 <mat-card>
     <mat-card-content>
       <div class="header">
-        <P>Sign Into Your Account </P>
+        <h2>Sign into your account</h2>
       </div>
       <form (ngSubmit)="onLogin()" name="loginForm" [formGroup]="loginForm">
         <div class="emailInput">
@@ -36,7 +36,7 @@
         <button mat-flat-button color="primary">Login</button>
       </form>
       <div class="button-row">
-        <button (click)="navigateToRoute()" mat-button>Create new account</button>
+        <button (click)="navigateToRegister()" mat-button>No Account?</button>
       </div>
     </mat-card-content>
 </mat-card>

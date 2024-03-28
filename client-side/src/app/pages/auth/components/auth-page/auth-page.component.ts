@@ -49,7 +49,7 @@ export class AuthPageComponent {
     console.log(this.loginForm.value);
   }
 
-  navigateToRoute() {
+  navigateToRegister() {
     this.router.navigateByUrl('/auth/register');
   }
 }
