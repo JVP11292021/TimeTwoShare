@@ -7,6 +7,7 @@ import org.restframework.web.core.templates.*;
 import org.restframework.web.annotations.markers.*;
 import java.util.*;
 
+@UpdateComponent
 @CompilationComponent
 @EqualsAndHashCode(callSuper=true)
 @Data
@@ -20,5 +21,7 @@ public class ReviewModel extends ModelFrame<Long> {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	private int rating;
+
+	private String reviewText;
 
 }

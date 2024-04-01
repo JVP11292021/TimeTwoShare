@@ -1,6 +1,70 @@
-<div id="container">
-    <h1>
-        This is landing page
-    </h1>
-    <button routerLink="/auth" mat-button>Login</button>
+<div class="container-landing">
+
+    <header>
+        <nav>
+            <ul>
+              <!-- <li><a routerLink=""><img src="/assets/logo.png"></a></li> -->
+            </ul>
+           <ul>
+            <li><button color="primary" routerLink="/auth" mat-button>Login</button></li>
+            <li><button routerLink="/auth/register" mat-button>Signup</button></li>
+           </ul>
+        </nav>
+    
+        <div class="tagline">
+            <h1>Discover a New Way to <br/>  Borrow and Lend</h1>
+            <h2>Connect with others to borrow or lend products between each other hassle-free.</h2>
+            <div>
+                <a routerLink="" class="contact">Free Trial</a> 
+                <a routerLink="" class="learn-more">Learn More</a> 
+            </div>
+        </div>
+        <img src="/assets/app-development.png" />
+        <div class="overlay"></div>
+    </header>
+    
+    <main>
+        <div class="intro">
+            <h3>Discover a New Way to Connect</h3>
+            <p>
+                Welcome to our platform where borrowing and lending products becomes seamless. Whether you're in need of an item for a short-term project or looking to share your resources with others, our community-driven service allows you to connect with like-minded individuals effortlessly. Say goodbye to the hassles of traditional borrowing and lending, and join us in revolutionizing the way we share resources. Together, let's show the world the power of collaboration.
+            </p>
+        </div>
+        
+    
+        <div class="multi-section">
+            <img src="/assets/responsive.png" />
+            <div>
+                <h3>Experience Seamless Responsiveness</h3>
+                <p>With our platform, enjoy full responsiveness across all devices and screen sizes. Whether you're accessing our service on a desktop computer, tablet, or smartphone, you can expect a seamless and optimized experience. Say goodbye to awkward layouts and frustrating navigation - our intuitive design ensures that you can access the resources you need, whenever and wherever you need them. Experience the convenience of true responsiveness with us.</p>
+            </div>
+        </div>        
+    
+        <div class="multi-section-two">
+            <img class="a" src="/assets/programming.png" />
+            <div class="b">
+                <h3>Unlock New Possibilities with Our Lending Service</h3>
+                <p>Imagine a world where you can access the tools and resources you need without the burden of ownership. Our lending service empowers individuals to lend and borrow a wide range of products, from power tools to kitchen appliances, fostering a culture of collaboration and resourcefulness. Whether you're a seasoned professional or an enthusiastic hobbyist, our platform provides a convenient avenue to share your expertise and equipment with others, while also gaining access to items you may only need temporarily. Join our community today and unlock a world of possibilities through lending.</p>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <ul>
+            <li><button color="primary" routerLink="/auth" mat-button>Login</button></li>
+            <li><button color="tertiary" routerLink="/auth/register" mat-button>Signup</button></li>
+        </ul>
+        <ul>
+            <li><button color="primary" routerLink="" mat-button>Time2Share</button></li>
+            <li><button color="tertiary" routerLink="" mat-button>Partners</button></li>
+            <li><button color="tertiary" routerLink="" mat-button>Careers</button></li>
+            <li><button color="tertiary" routerLink="" mat-button>Support</button></li>
+        </ul>
+        <ul>
+            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+        </ul>
+    
+    </footer>
 </div>

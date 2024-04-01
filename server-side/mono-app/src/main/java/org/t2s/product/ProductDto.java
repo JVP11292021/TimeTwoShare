@@ -6,6 +6,7 @@ import org.restframework.web.core.templates.*;
 import org.restframework.web.annotations.markers.*;
 import java.util.*;
 
+@UpdateComponent
 @CompilationComponent
 @EqualsAndHashCode(callSuper=true)
 @Data
@@ -18,5 +19,7 @@ public class ProductDto extends DtoFrame {
 	private boolean isLent;
 
 	private Date deadline;
+
+	private String description;
 
 }

@@ -6,6 +6,7 @@ import org.restframework.web.core.templates.*;
 import org.restframework.web.annotations.markers.*;
 import java.util.*;
 
+@UpdateComponent
 @CompilationComponent
 @EqualsAndHashCode(callSuper=true)
 @Data
@@ -14,5 +15,7 @@ import java.util.*;
 @Builder
 public class ReviewDto extends DtoFrame {
 	private int rating;
+
+	private String reviewText;
 
 }

@@ -29,7 +29,8 @@ import java.io.UnsupportedEncodingException;
                                 fields = {
                                         @FieldData(name = "name"),
                                         @FieldData(datatype = "boolean", name = "isLent"),
-                                        @FieldData(datatype = "Date", name = "deadline")
+                                        @FieldData(datatype = "Date", name = "deadline"),
+                                        @FieldData(name="description")
                                 }
                         )
                 ),
@@ -42,6 +43,7 @@ import java.io.UnsupportedEncodingException;
                                 tableName = "reviews",
                                 fields = {
                                         @FieldData(datatype = "int", name = "rating"),
+                                        @FieldData(name = "reviewText")
                                 }
                         )
                 )

@@ -3,17 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { authGuard } from './auth.guard';
 
 const routes: Routes = [
-
-  // {
-  //   path: 'home',
-  //   loadChildren: () =>
-  //     import("src/app/pages/home-page/home.route").then((m) => m.homePageRoutes) 
-  // },
-
-  // { 
-  //   path: '**',
-  //   redirectTo: 'auth' 
-  // },
   {
     path: '',
     loadChildren: () => import('./public/public.module').then((m) => m.PublicModule)
