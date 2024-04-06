@@ -25,6 +25,7 @@ public class ProductService implements TServiceCRUD<Long, ProductDto, ProductMod
 				.name(productdto.getName())
 				.imgUrl(productdto.getImgUrl())
 				.contract(productdto.getContract())
+				.reviews(productdto.getReviews())
 				.build();
 
 		this.repository.save(model);
@@ -42,6 +43,7 @@ public class ProductService implements TServiceCRUD<Long, ProductDto, ProductMod
 							.imgUrl(productModel.getImgUrl())
 							.isLent(productModel.isLent())
 							.contract(productModel.getContract())
+							.reviews(productModel.getReviews())
 							.build())
 				 .collect(Collectors.toList());
 	}
@@ -70,7 +72,7 @@ public class ProductService implements TServiceCRUD<Long, ProductDto, ProductMod
 	}
 
 	public Boolean isLent(String name) {
-		Optional<ProductModel> model = this.repository.finByName(name);
+		Optional<ProductModel> model = this.repository.findByName(name);
         return model.map(ProductModel::isLent).orElse(false);
     }
 }

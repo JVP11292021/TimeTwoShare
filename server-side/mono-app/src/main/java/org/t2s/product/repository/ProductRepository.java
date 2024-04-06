@@ -9,5 +9,5 @@ import java.util.*;
 @CompilationComponent
 @Repository
 public interface ProductRepository extends TRepo<ProductModel, Long> {
-    Optional<ProductModel> finByName(String name);
+    Optional<ProductModel> findByName(String name);
 }

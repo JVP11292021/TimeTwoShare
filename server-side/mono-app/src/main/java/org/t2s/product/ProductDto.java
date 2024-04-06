@@ -4,6 +4,9 @@ import lombok.*;
 import org.restframework.web.annotations.markers.CompilationComponent;
 import org.restframework.web.core.templates.DtoFrame;
 import org.t2s.contract.ContractModel;
+import org.t2s.review.ReviewModel;
+
+import java.util.List;
 
 @CompilationComponent
 @EqualsAndHashCode(callSuper=true)
@@ -23,4 +26,7 @@ public class ProductDto extends DtoFrame {
 	private String imgUrl;
 
 	private ContractModel contract;
+
+	private List<ReviewModel> reviews;
+
 }

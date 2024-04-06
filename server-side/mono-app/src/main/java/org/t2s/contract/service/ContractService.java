@@ -7,7 +7,6 @@ import lombok.*;
 import org.springframework.stereotype.Service;
 import org.restframework.web.core.templates.*;
 import org.restframework.web.annotations.markers.*;
-import org.t2s.product.ProductModel;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -21,8 +20,8 @@ public class ContractService implements TServiceCRUD<Long, ContractDto, Contract
 	@Override
 	public int insert(ContractDto contractdto) {
 		ContractModel model = ContractModel.builder()
-				.end(contractdto.getEnd())
-				.begin(contractdto.getBegin())
+				.endDate(contractdto.getEndDate())
+				.beginDate(contractdto.getBeginDate())
 				.lendingPrice(contractdto.getLendingPrice())
 				.product(contractdto.getProduct())
 				.build();
@@ -35,8 +34,8 @@ public class ContractService implements TServiceCRUD<Long, ContractDto, Contract
 				 .findAll()
 				 	.stream()
 				 	.map(contractModel -> ContractDto.builder()
-							.end(contractModel.getEnd())
-							.begin(contractModel.getBegin())
+							.endDate(contractModel.getEndDate())
+							.beginDate(contractModel.getBeginDate())
 							.lendingPrice(contractModel.getLendingPrice())
 							.product(contractModel.getProduct())
 							.build())

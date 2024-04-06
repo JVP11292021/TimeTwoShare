@@ -5,6 +5,9 @@ import lombok.*;
 import org.restframework.web.annotations.markers.CompilationComponent;
 import org.restframework.web.core.templates.ModelFrame;
 import org.t2s.contract.ContractModel;
+import org.t2s.review.ReviewModel;
+
+import java.util.List;
 
 @CompilationComponent
 @EqualsAndHashCode(callSuper=true)
@@ -28,7 +31,10 @@ public class ProductModel extends ModelFrame<Long> {
 
 	private String imgUrl;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "contract_id", referencedColumnName = "id")
+	@OneToOne(mappedBy = "product")
 	private ContractModel contract;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
+	private List<ReviewModel> reviews;
+
 }

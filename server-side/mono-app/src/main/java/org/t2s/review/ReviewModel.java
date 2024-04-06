@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.restframework.web.annotations.markers.CompilationComponent;
 import org.restframework.web.core.templates.ModelFrame;
+import org.t2s.product.ProductModel;
 
 @CompilationComponent
 @EqualsAndHashCode(callSuper=true)
@@ -20,5 +21,9 @@ public class ReviewModel extends ModelFrame<Long> {
 	private int rating;
 
 	private String reviewText;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "product_id")
+	private ProductModel product;
 
 }

@@ -1,6 +1,5 @@
 package org.t2s.contract;
 
-import org.t2s.contract.*;
 import lombok.*;
 import jakarta.persistence.*;
 import org.restframework.web.core.templates.*;
@@ -20,10 +19,11 @@ import java.util.*;
 public class ContractModel extends ModelFrame<Long> {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "id")
 	private Long id;
-	private Date begin;
+	private Date beginDate;
 
-	private Date end;
+	private Date endDate;
 
 	private double lendingPrice;
 
