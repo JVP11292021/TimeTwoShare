@@ -27,14 +27,18 @@ public class ProductController implements TControllerEntityResponseWildcard<Long
 	public ResponseEntity<?> getAllEntities() {
 		 return ResponseEntity.ok(productService.getAll());
 	}
+	@GetMapping(path="/{name}")
+	public ResponseEntity<Boolean> isProductLent(@PathVariable("name") String name) {
+		return ResponseEntity.ok(productService.isLent(name));
+	}
 	@Override
-	@DeleteMapping
-	public ResponseEntity<?> removeEntityById(Long id) {
+	@DeleteMapping(path="/{id}")
+	public ResponseEntity<?> removeEntityById(@PathVariable("id") Long id) {
 		 return ResponseEntity.ok(productService.removeById(id));
 	}
 	@Override
-	@PutMapping
-	public ResponseEntity<?> updateEntity(Long id, @RequestBody ProductModel productmodel) {
+	@PutMapping(path="/{id}")
+	public ResponseEntity<?> updateEntity(@PathVariable("id") Long id, @RequestBody ProductModel productmodel) {
 		 return ResponseEntity.ok(productService.update(id, productmodel));
 	}
 }

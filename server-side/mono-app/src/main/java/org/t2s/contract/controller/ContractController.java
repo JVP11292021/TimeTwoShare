@@ -14,6 +14,7 @@ import java.util.*;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/t2s/v1/contract")
+@CrossOrigin("http://localhost:4200")
 public class ContractController implements TControllerEntityResponseWildcard<Long, ContractDto, ContractModel> {
 	private final ContractService contractService;
 	@Override
@@ -27,13 +28,13 @@ public class ContractController implements TControllerEntityResponseWildcard<Lon
 		 return ResponseEntity.ok(contractService.getAll());
 	}
 	@Override
-	@DeleteMapping
-	public ResponseEntity<?> removeEntityById(Long id) {
+	@DeleteMapping(path="/{id}")
+	public ResponseEntity<?> removeEntityById(@PathVariable("id") Long id) {
 		 return ResponseEntity.ok(contractService.removeById(id));
 	}
 	@Override
-	@PutMapping
-	public ResponseEntity<?> updateEntity(Long id, @RequestBody ContractModel contractmodel) {
+	@PutMapping(path="/{id}")
+	public ResponseEntity<?> updateEntity(@PathVariable("id") Long id, @RequestBody ContractModel contractmodel) {
 		 return ResponseEntity.ok(contractService.update(id, contractmodel));
 	}
 }

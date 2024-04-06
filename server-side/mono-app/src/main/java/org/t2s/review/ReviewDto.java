@@ -1,12 +1,9 @@
 package org.t2s.review;
 
-import org.t2s.review.*;
 import lombok.*;
-import org.restframework.web.core.templates.*;
-import org.restframework.web.annotations.markers.*;
-import java.util.*;
+import org.restframework.web.annotations.markers.CompilationComponent;
+import org.restframework.web.core.templates.DtoFrame;
 
-@UpdateComponent
 @CompilationComponent
 @EqualsAndHashCode(callSuper=true)
 @Data

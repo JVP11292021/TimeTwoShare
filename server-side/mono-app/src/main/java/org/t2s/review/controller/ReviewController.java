@@ -28,13 +28,13 @@ public class ReviewController implements TControllerEntityResponseWildcard<Long,
 		 return ResponseEntity.ok(reviewService.getAll());
 	}
 	@Override
-	@DeleteMapping
-	public ResponseEntity<?> removeEntityById(Long id) {
+	@DeleteMapping(path="/{id}")
+	public ResponseEntity<?> removeEntityById(@PathVariable("id") Long id) {
 		 return ResponseEntity.ok(reviewService.removeById(id));
 	}
 	@Override
-	@PutMapping
-	public ResponseEntity<?> updateEntity(Long id, @RequestBody ReviewModel reviewmodel) {
+	@PutMapping(path="/{id}")
+	public ResponseEntity<?> updateEntity(@PathVariable("id") Long id, @RequestBody ReviewModel reviewmodel) {
 		 return ResponseEntity.ok(reviewService.update(id, reviewmodel));
 	}
 }
