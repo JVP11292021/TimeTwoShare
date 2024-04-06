@@ -1,13 +1,10 @@
 package org.t2s.product;
 
-import org.t2s.product.*;
-import lombok.*;
 import jakarta.persistence.*;
-import org.restframework.web.core.templates.*;
-import org.restframework.web.annotations.markers.*;
-import java.util.*;
+import lombok.*;
+import org.restframework.web.annotations.markers.CompilationComponent;
+import org.restframework.web.core.templates.ModelFrame;
 
-@UpdateComponent
 @CompilationComponent
 @EqualsAndHashCode(callSuper=true)
 @Data
@@ -22,10 +19,12 @@ public class ProductModel extends ModelFrame<Long> {
 	private Long id;
 	private String name;
 
+	private String description;
+
+	private double price;
+
 	private boolean isLent;
 
-	private Date deadline;
-
-	private String description;
+	private String imgUrl;
 
 }

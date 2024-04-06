@@ -1,12 +1,9 @@
 package org.t2s.product;
 
-import org.t2s.product.*;
 import lombok.*;
-import org.restframework.web.core.templates.*;
-import org.restframework.web.annotations.markers.*;
-import java.util.*;
+import org.restframework.web.annotations.markers.CompilationComponent;
+import org.restframework.web.core.templates.DtoFrame;
 
-@UpdateComponent
 @CompilationComponent
 @EqualsAndHashCode(callSuper=true)
 @Data
@@ -16,10 +13,12 @@ import java.util.*;
 public class ProductDto extends DtoFrame {
 	private String name;
 
+	private String description;
+
+	private double price;
+
 	private boolean isLent;
 
-	private Date deadline;
-
-	private String description;
+	private String imgUrl;
 
 }

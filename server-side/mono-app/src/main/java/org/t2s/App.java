@@ -28,9 +28,24 @@ import java.io.UnsupportedEncodingException;
                                 tableName = "products",
                                 fields = {
                                         @FieldData(name = "name"),
+                                        @FieldData(name="description"),
+                                        @FieldData(datatype = "double", name = "price"),
                                         @FieldData(datatype = "boolean", name = "isLent"),
-                                        @FieldData(datatype = "Date", name = "deadline"),
-                                        @FieldData(name="description")
+                                        @FieldData(name = "imgUrl"),
+                                }
+                        )
+                ),
+                @API(
+                        apiName = "Contract",
+                        apiPackage = "contract",
+                        endpoint = "/t2s/v1/contract",
+                        model = @Model(
+                                generic = Generic.LONG,
+                                tableName = "contracts",
+                                fields = {
+                                    @FieldData(datatype = "Date", name = "begin"),
+                                    @FieldData(datatype = "Date", name = "end"),
+                                    @FieldData(datatype = "double", name = "lendingPrice")
                                 }
                         )
                 ),

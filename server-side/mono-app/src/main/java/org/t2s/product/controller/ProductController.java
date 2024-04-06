@@ -19,7 +19,7 @@ public class ProductController implements TControllerEntityResponseWildcard<Long
 	private final ProductService productService;
 	@Override
 	@PostMapping
-	public ResponseEntity<?> insertEntity(ProductDto productdto) {
+	public ResponseEntity<?> insertEntity(@RequestBody ProductDto productdto) {
 		 return ResponseEntity.ok(productService.insert(productdto));
 	}
 	@Override
@@ -34,7 +34,7 @@ public class ProductController implements TControllerEntityResponseWildcard<Long
 	}
 	@Override
 	@PutMapping
-	public ResponseEntity<?> updateEntity(Long id, ProductModel productmodel) {
+	public ResponseEntity<?> updateEntity(Long id, @RequestBody ProductModel productmodel) {
 		 return ResponseEntity.ok(productService.update(id, productmodel));
 	}
 }

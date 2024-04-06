@@ -19,7 +19,7 @@ public class ReviewController implements TControllerEntityResponseWildcard<Long,
 	private final ReviewService reviewService;
 	@Override
 	@PostMapping
-	public ResponseEntity<?> insertEntity(ReviewDto reviewdto) {
+	public ResponseEntity<?> insertEntity(@RequestBody ReviewDto reviewdto) {
 		 return ResponseEntity.ok(reviewService.insert(reviewdto));
 	}
 	@Override
@@ -34,7 +34,7 @@ public class ReviewController implements TControllerEntityResponseWildcard<Long,
 	}
 	@Override
 	@PutMapping
-	public ResponseEntity<?> updateEntity(Long id, ReviewModel reviewmodel) {
+	public ResponseEntity<?> updateEntity(Long id, @RequestBody ReviewModel reviewmodel) {
 		 return ResponseEntity.ok(reviewService.update(id, reviewmodel));
 	}
 }
