@@ -2,6 +2,7 @@ package org.t2s;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.jetbrains.annotations.NotNull;
+import org.restframework.web.annotations.markers.CompilationComponent;
 import org.restframework.web.exceptions.ErrorResponse;
 import org.restframework.web.exceptions.ExceptionAdvice;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @SuppressWarnings("unused")
+@CompilationComponent
 @ControllerAdvice
 public class ExceptionHandler extends ResponseEntityExceptionHandler implements ExceptionAdvice {
     @Override
