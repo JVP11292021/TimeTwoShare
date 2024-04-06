@@ -24,6 +24,7 @@ public class ProductService implements TServiceCRUD<Long, ProductDto, ProductMod
 				.price(productdto.getPrice())
 				.name(productdto.getName())
 				.imgUrl(productdto.getImgUrl())
+				.contract(productdto.getContract())
 				.build();
 
 		this.repository.save(model);
@@ -40,6 +41,7 @@ public class ProductService implements TServiceCRUD<Long, ProductDto, ProductMod
 							.description(productModel.getDescription())
 							.imgUrl(productModel.getImgUrl())
 							.isLent(productModel.isLent())
+							.contract(productModel.getContract())
 							.build())
 				 .collect(Collectors.toList());
 	}

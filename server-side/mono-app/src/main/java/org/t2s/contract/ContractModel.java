@@ -5,6 +5,8 @@ import lombok.*;
 import jakarta.persistence.*;
 import org.restframework.web.core.templates.*;
 import org.restframework.web.annotations.markers.*;
+import org.t2s.product.ProductModel;
+
 import java.util.*;
 
 @CompilationComponent
@@ -25,4 +27,7 @@ public class ContractModel extends ModelFrame<Long> {
 
 	private double lendingPrice;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "product_id", referencedColumnName = "id")
+	private ProductModel product;
 }

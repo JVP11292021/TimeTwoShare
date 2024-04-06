@@ -1,12 +1,16 @@
 package org.t2s.contract.service;
 
+import org.springframework.beans.BeanUtils;
 import org.t2s.contract.*;
 import org.t2s.contract.repository.*;
 import lombok.*;
 import org.springframework.stereotype.Service;
 import org.restframework.web.core.templates.*;
 import org.restframework.web.annotations.markers.*;
+import org.t2s.product.ProductModel;
+
 import java.util.*;
+import java.util.stream.Collectors;
 
 @CompilationComponent
 @Data
@@ -16,18 +20,49 @@ public class ContractService implements TServiceCRUD<Long, ContractDto, Contract
 	private final ContractRepository repository;
 	@Override
 	public int insert(ContractDto contractdto) {
-		 return 0;
+		ContractModel model = ContractModel.builder()
+				.end(contractdto.getEnd())
+				.begin(contractdto.getBegin())
+				.lendingPrice(contractdto.getLendingPrice())
+				.product(contractdto.getProduct())
+				.build();
+		this.repository.save(model);
+		return 1;
 	}
 	@Override
 	public List<ContractDto> getAll() {
-		 return null;
+		 return this.repository
+				 .findAll()
+				 	.stream()
+				 	.map(contractModel -> ContractDto.builder()
+							.end(contractModel.getEnd())
+							.begin(contractModel.getBegin())
+							.lendingPrice(contractModel.getLendingPrice())
+							.product(contractModel.getProduct())
+							.build())
+				 .collect(Collectors.toList());
 	}
 	@Override
 	public boolean removeById(Long id) {
-		 return false;
+		if (id == null) return false;
+
+		if (utils.exists(id, this.repository)) {
+			this.repository.deleteById(id);
+			return true;
+		}
+		return false;
 	}
 	@Override
 	public boolean update(Long id, ContractModel contractmodel) {
-		 return false;
+		if (id == null) return false;
+
+		Optional<ContractModel> optionalModel = repository.findById(id);
+		if (optionalModel.isPresent()) {
+			ContractModel existingModel = optionalModel.get();
+			BeanUtils.copyProperties(contractmodel, existingModel, "id");
+			repository.save(existingModel);
+			return true;
+		}
+		return false;
 	}
 }

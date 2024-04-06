@@ -4,6 +4,8 @@ import org.t2s.contract.*;
 import lombok.*;
 import org.restframework.web.core.templates.*;
 import org.restframework.web.annotations.markers.*;
+import org.t2s.product.ProductModel;
+
 import java.util.*;
 
 @CompilationComponent
@@ -19,4 +21,5 @@ public class ContractDto extends DtoFrame {
 
 	private double lendingPrice;
 
+	private ProductModel product;
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.restframework.web.annotations.markers.CompilationComponent;
 import org.restframework.web.core.templates.ModelFrame;
+import org.t2s.contract.ContractModel;
 
 @CompilationComponent
 @EqualsAndHashCode(callSuper=true)
@@ -27,4 +28,7 @@ public class ProductModel extends ModelFrame<Long> {
 
 	private String imgUrl;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "contract_id", referencedColumnName = "id")
+	private ContractModel contract;
 }
