@@ -1,5 +1,6 @@
 package org.t2s;
 
+import lombok.extern.slf4j.Slf4j;
 import org.restframework.web.WebApp;
 import org.restframework.web.annotations.EnableRestConfiguration;
 import org.restframework.web.annotations.RestApi;
@@ -8,6 +9,7 @@ import org.restframework.web.annotations.types.FieldData;
 import org.restframework.web.annotations.types.Model;
 import org.restframework.web.core.generics.Generic;
 import org.restframework.web.core.templates.TControllerEntityResponseWildcard;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
@@ -65,9 +67,15 @@ import java.io.UnsupportedEncodingException;
         }
 )
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
+@Slf4j
 public class App {
     public static void main(String[] args) throws UnsupportedEncodingException {
-        new WebApp(App.class)
-                .run(args);
+        try {
+            new WebApp(App.class)
+                    .run(args);
+        } catch (Exception e) {
+            log.error("Error - {}", e.getMessage());
+            SpringApplication.run(App.class);
+        }
     }
 }
