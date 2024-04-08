@@ -6,13 +6,13 @@ services:
       context: ./mono-app
       dockerfile: Dockerfile
     ports:
-      - "8089:8089"
+      - "8089:8081"
     depends_on:
       - db
     environment:
-      db-url: jdbc:postgresql://db:5432/time_two_share
-      db-username: postgres
-      db-password: PostEppie
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=PostEppie
     restart: always
   db:
     ports:
