@@ -1,6 +1,5 @@
-FROM ibmjava:jre
+FROM openjdk:17-oracle
 MAINTAINER jessyvanpolanen
-WORKDIR /app
-COPY ./target/mono-app-1.0.jar /app/mono-app.jar
-
-ENTRYPOINT ["java","-jar","/app/mono-app.jar"]
+COPY target/*.jar mono-app.jar
+EXPOSE 8089
+ENTRYPOINT ["java","-jar","mono-app.jar"]
