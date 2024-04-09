@@ -1,5 +1,6 @@
 package org.t2s.product.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.t2s.product.*;
 import org.t2s.product.repository.*;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 @Data
 @AllArgsConstructor
 @Service
+@Slf4j
 public class ProductService implements TServiceCRUD<Long, ProductDto, ProductModel> {
 	private final ProductRepository repository;
 	@Override
@@ -28,6 +30,7 @@ public class ProductService implements TServiceCRUD<Long, ProductDto, ProductMod
 				.reviews(productdto.getReviews())
 				.build();
 
+		log.info("Inserted value into product_db: {}", model);
 		this.repository.save(model);
 		return 1;
 	}

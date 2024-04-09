@@ -1,5 +1,6 @@
 package org.t2s.contract.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.t2s.contract.*;
 import org.t2s.contract.repository.*;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 @Data
 @AllArgsConstructor
 @Service
+@Slf4j
 public class ContractService implements TServiceCRUD<Long, ContractDto, ContractModel> {
 	private final ContractRepository repository;
 	@Override
@@ -25,6 +27,7 @@ public class ContractService implements TServiceCRUD<Long, ContractDto, Contract
 				.lendingPrice(contractdto.getLendingPrice())
 				.product(contractdto.getProduct())
 				.build();
+		log.info("Inserted value into contract_db: {}", model);
 		this.repository.save(model);
 		return 1;
 	}
