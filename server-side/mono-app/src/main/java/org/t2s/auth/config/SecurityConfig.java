@@ -18,6 +18,7 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.t2s.auth.NetworkProperties;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ import static org.t2s.auth.user.Role.MANAGER;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-//@EnableMethodSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
     private static final String[] WHITE_LIST_URL = {
             "/t2s/v1/auth/**",
@@ -40,7 +41,7 @@ public class SecurityConfig {
             "/webjars/**",
     };
 
-    private final JwtAuthenticationEntryPoint unauthorizedHandler;
+    private final NetworkProperties properties;
     private final JwtAuthFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;
@@ -48,9 +49,9 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200/"));
-        configuration.setAllowedMethods(List.of("GET","POST","DELETE","PUT"));
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        configuration.setAllowedOrigins(properties.getCors());
+        configuration.setAllowedMethods(properties.getMethods());
+        configuration.setAllowedHeaders(properties.getHeaders());
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

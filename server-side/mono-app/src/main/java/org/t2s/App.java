@@ -15,6 +15,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import java.io.UnsupportedEncodingException;
 
+import static org.t2s.SafeRunner.safeApplicationRunner;
+
 @SpringBootApplication
 @EnableRestConfiguration
 @RestApi(
@@ -69,13 +71,7 @@ import java.io.UnsupportedEncodingException;
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @Slf4j
 public class App {
-    public static void main(String[] args) throws UnsupportedEncodingException {
-        try {
-            new WebApp(App.class)
-                    .run(args);
-        } catch (Exception e) {
-            log.error("Error - {}", e.getMessage());
-            SpringApplication.run(App.class);
-        }
+    public static void main(String[] args) {
+        safeApplicationRunner(App.class, args);
     }
 }

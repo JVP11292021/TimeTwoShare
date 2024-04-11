@@ -5,12 +5,14 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.t2s.auth.TokenProperties;
 
 import java.security.Key;
 import java.util.Date;
@@ -18,16 +20,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+@RequiredArgsConstructor
 @Service
 public class JwtService {
 
-
-    @Value("${application.security.jwt.secret-key}")
-    private String secretKey;
-    @Value("${application.security.jwt.expiration}")
-    private long jwtExpiration;
-    @Value("${application.security.jwt.refresh-token.expiration}")
-    private long refreshExpiration;
+    private final TokenProperties properties;
 
     public String extractUsername(String token) {
         return this.extractClaim(token, Claims::getSubject);
@@ -43,11 +40,11 @@ public class JwtService {
     }
 
     public String generateToken(Map<String, Object> extraClaims, @NotNull UserDetails userDetails) {
-        return this.buildToken(extraClaims, userDetails, this.jwtExpiration);
+        return this.buildToken(extraClaims, userDetails, this.properties.getJwtExpiration());
     }
 
     public String generateRefreshToken(@NotNull UserDetails userDetails) {
-        return this.buildToken(new HashMap<>(), userDetails, this.refreshExpiration);
+        return this.buildToken(new HashMap<>(), userDetails, this.properties.getRefreshExpiration());
     }
 
     private @NotNull String buildToken(
@@ -88,7 +85,7 @@ public class JwtService {
     }
 
     private @NotNull Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(this.secretKey);
+        byte[] keyBytes = Decoders.BASE64.decode(this.properties.getSecretKey());
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
