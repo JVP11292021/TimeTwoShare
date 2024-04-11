@@ -1,8 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ACCESS_TOKEN_STORED_NAME } from '../globals';
-import { PersistanceStorageService } from './persistance-storage.service';
+import { HttpService } from './http.service';
+import { Review } from './review.service';
 
 export type Product = {
   name: NamedCurve;
@@ -10,6 +9,7 @@ export type Product = {
   price: number;
   isLent: boolean;
   imgUrl: NamedCurve;
+  reviews: Review[];
 }
 
 @Injectable({
@@ -17,58 +17,27 @@ export type Product = {
 })
 export class ProductService {
 
-  private http: HttpClient = inject(HttpClient);
-  private storage: PersistanceStorageService = inject(PersistanceStorageService);
+  private httpService = inject(HttpService);
 
   constructor() { }
 
   store(product: Product) : Observable<number> {
-    const token = this.storage.getData(ACCESS_TOKEN_STORED_NAME);
-    return this.http.post<number>(
-      'http://localhost:8081/t2s/v1/product',
-       product,
-       {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token
-        })
-       });
+    return this.httpService.request('http://localhost:8081/t2s/v1/product', 'POST', product);
   }
 
   getAll() : Observable<Product[]> {
-    const token = this.storage.getData(ACCESS_TOKEN_STORED_NAME);
-    return this.http.get<Product[]>(
-      'http://localhost:8081/t2s/v1/product',
-       {
-        headers: new HttpHeaders({          
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token
-        })
-       });
+    return this.httpService.request('http://localhost:8081/t2s/v1/product', 'GET');
   }
 
   update(id: number, product: Product): Observable<boolean> {
-    const token = this.storage.getData(ACCESS_TOKEN_STORED_NAME);
-    return this.http.put<boolean>(
-      `http://localhost:8081/t2s/v1/product/${id}`,
-      product,
-      {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token
-        })
-       })
+    return this.httpService.request(`http://localhost:8081/t2s/v1/product/${id}`, 'PUT', product);
   }
 
   removeById(id: number): Observable<boolean> {
-    const token = this.storage.getData(ACCESS_TOKEN_STORED_NAME);
-    return this.http.delete<boolean>(
-      `http://localhost:8081/t2s/v1/product/${id}`,
-      {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token
-        })
-       })
+    return this.httpService.request(`http://localhost:8081/t2s/v1/product/${id}`, 'DELETE');
+  }
+
+  isProductLent(name: NamedCurve): Observable<boolean> {
+    return this.httpService.request(`http://localhost:8081/t2s/v1/product/${name}`, 'GET');
   }
 }

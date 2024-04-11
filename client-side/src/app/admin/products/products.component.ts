@@ -34,7 +34,8 @@ export class ProductsComponent implements OnInit {
       description: " ",
       imgUrl: " ",
       isLent: false,
-      price: 0.1
+      price: 0.1,
+      reviews: []
     }).subscribe((res) => console.log(res))
   }
 
