@@ -4,29 +4,25 @@ import { Observable } from 'rxjs';
 import { ACCESS_TOKEN_STORED_NAME } from '../globals';
 import { PersistanceStorageService } from './persistance-storage.service';
 
-export type Product = {
-  name: NamedCurve;
-  description: NamedCurve;
-  price: number;
-  isLent: boolean;
-  imgUrl: NamedCurve;
+export type Contract = {
+  
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService {
+export class ContractService {
 
-  private http: HttpClient = inject(HttpClient);
-  private storage: PersistanceStorageService = inject(PersistanceStorageService);
+  private http = inject(HttpClient);
+  private storage = inject(PersistanceStorageService);
 
   constructor() { }
 
-  store(product: Product) : Observable<number> {
+  store(contract: Contract): Observable<number> {
     const token = this.storage.getData(ACCESS_TOKEN_STORED_NAME);
     return this.http.post<number>(
-      'http://localhost:8081/t2s/v1/product',
-       product,
+      'http://localhost:8081/t2s/v1/contract',
+       contract,
        {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -35,23 +31,23 @@ export class ProductService {
        });
   }
 
-  getAll() : Observable<Product[]> {
+  getAll(): Observable<Contract[]> {
     const token = this.storage.getData(ACCESS_TOKEN_STORED_NAME);
-    return this.http.get<Product[]>(
-      'http://localhost:8081/t2s/v1/product',
-       {
-        headers: new HttpHeaders({          
+    return this.http.get<Contract[]>(
+      'http://localhost:8081/t2s/v1/contract',
+      {
+        headers: new HttpHeaders({
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + token
         })
-       });
-  }
+       })
+  } 
 
-  update(id: number, product: Product): Observable<boolean> {
+  update(id: number, contract: Contract): Observable<boolean> {
     const token = this.storage.getData(ACCESS_TOKEN_STORED_NAME);
     return this.http.put<boolean>(
-      `http://localhost:8081/t2s/v1/product/${id}`,
-      product,
+      `http://localhost:8081/t2s/v1/contract/${id}`,
+      contract,
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -63,7 +59,7 @@ export class ProductService {
   removeById(id: number): Observable<boolean> {
     const token = this.storage.getData(ACCESS_TOKEN_STORED_NAME);
     return this.http.delete<boolean>(
-      `http://localhost:8081/t2s/v1/product/${id}`,
+      `http://localhost:8081/t2s/v1/contract/${id}`,
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',

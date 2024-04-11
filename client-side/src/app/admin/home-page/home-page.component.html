@@ -1,6 +1,6 @@
 <matexp-menubar contentStyle="text-align:center; height: 100vh;" [config]="{title: 'Time2Share Portal', complete:true}">
     <ng-template matexpMenuBarHeader let-item>
-       <button mat-button><mat-icon>contact_phone</mat-icon>Contact</button>
+       <button mat-button (click)="logout()"><mat-icon>logout</mat-icon>Logout</button>
     </ng-template>
     <ng-template matexpMenuBarNavigation>
        <mat-nav-list>

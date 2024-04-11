@@ -58,6 +58,17 @@ export class AuthService {
     });
   }
 
+  logout(): void {
+    const token = this.storage.getData(ACCESS_TOKEN_STORED_NAME);
+    this.http.get("http://localhost:8081/t2s/v1/auth/logout",     
+    {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      })
+    });
+  }
+
   getLatestAccessTokenByEmail(email: string) : Observable<string> {
     return this.http.get<string>(`http://localhost:8081/t2s/v1/auth/${email}`);
   }
