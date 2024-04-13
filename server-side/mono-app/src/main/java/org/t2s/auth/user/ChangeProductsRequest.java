@@ -7,6 +7,5 @@ import java.util.List;
 
 @Data
 public class ChangeProductsRequest {
-    private String currentPassword;
-    private List<ProductDto> products;
+    private ProductDto products;
 }

@@ -16,7 +16,7 @@ export class HttpService {
 
   request<T extends object, TReturn>(
     url: string,
-    method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
     bodyData?: T
   ): Observable<TReturn> {
     const token = this.storage.getData(ACCESS_TOKEN_STORED_NAME);

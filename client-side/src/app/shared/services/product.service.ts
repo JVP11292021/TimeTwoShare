@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpService } from './http.service';
 import { Review } from './review.service';
@@ -11,6 +12,18 @@ export type Product = {
   imgUrl: NamedCurve;
   reviews: Review[];
 }
+
+export function build(group: FormGroup): Product {
+  return {
+    name: group.value.name,
+    description: group.value.description,
+    price: group.value.price,
+    isLent: false,
+    imgUrl: group.value.imgUrl,
+    reviews: []
+  };
+}
+
 
 @Injectable({
   providedIn: 'root'

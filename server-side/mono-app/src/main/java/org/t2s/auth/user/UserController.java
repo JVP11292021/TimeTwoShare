@@ -3,6 +3,7 @@ package org.t2s.auth.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.t2s.product.ProductDto;
 
 import java.security.Principal;
 
@@ -23,11 +24,11 @@ public class UserController {
 
     @PatchMapping(path="/products")
     public ResponseEntity<?> changeProducts(
-            @RequestBody ChangeProductsRequest request,
+            @RequestBody ProductDto productDto,
             Principal connectedUser
     ) {
-        this.service.changeProducts(request, connectedUser);
-        return ResponseEntity.ok("Patched fine!");
+        this.service.changeProducts(productDto, connectedUser);
+        return ResponseEntity.ok(1);
     }
 
     @GetMapping(path="/{email}")

@@ -8,10 +8,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { PublicModule } from './public/public.module';
 import { MaterialExpandedModule } from './shared/material/material-expanded.module';
 import { MaterialModule } from './shared/material/material.module';
+import { ProductPopUpComponent } from './admin/products/product-pop-up.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
+    ProductPopUpComponent,
   ],
   imports: [
     BrowserModule,
@@ -21,6 +24,8 @@ import { MaterialModule } from './shared/material/material.module';
     PublicModule,
     MaterialExpandedModule,
     MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

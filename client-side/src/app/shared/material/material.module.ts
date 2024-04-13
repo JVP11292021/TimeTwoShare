@@ -20,9 +20,11 @@ import {MatRadioModule} from "@angular/material/radio"
 import {MatCheckboxModule} from "@angular/material/checkbox"
 import {MatDialogModule} from "@angular/material/dialog"
 import {MatTabsModule} from '@angular/material/tabs'
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   exports: [
+    MatGridListModule,
     MatInputModule,
     MatSelectModule,
     MatAutocompleteModule,

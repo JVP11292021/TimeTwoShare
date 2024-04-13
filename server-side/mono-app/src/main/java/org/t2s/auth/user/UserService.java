@@ -6,6 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.t2s.auth.token.TokenRepo;
+import org.t2s.product.ProductDto;
 import org.t2s.product.ProductModel;
 
 import java.security.Principal;
@@ -37,14 +38,11 @@ public class UserService {
         return this.repo.findByEmail(email).orElse(null);
     }
 
-    public void changeProducts(ChangeProductsRequest request, Principal connectedUser) {
+    public void changeProducts(ProductDto productDto, Principal connectedUser) {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
-        if (!this.encoder.matches(request.getCurrentPassword(), user.getPassword()))
-            throw new IllegalStateException("Wrong password");
 
-        user.setProducts(request.getProducts()
-                .stream()
-                .map(productDto -> ProductModel.builder()
+        user.getProducts()
+                .add(ProductModel.builder()
                         .name(productDto.getName())
                         .price(productDto.getPrice())
                         .description(productDto.getDescription())
@@ -52,8 +50,7 @@ public class UserService {
                         .isLent(productDto.isLent())
                         .contract(productDto.getContract())
                         .reviews(productDto.getReviews())
-                        .build())
-                .collect(Collectors.toList()));
+                        .build());
         this.repo.save(user);
     }
 }
