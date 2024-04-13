@@ -1,21 +1,21 @@
 <div class="app-card" *ngFor="let product of (products$ | async)">
-    <matexp-card class="">
-      <ng-template matexpCardHeader>
-        <!-- Render product name or any other relevant information -->
-        <h2>{{ product.name }}</h2>
-      </ng-template>
-      <ng-template matexpCardContent>
-        <!-- Render product description, price, image, etc. -->
-        <p>Description: {{ product.description }}</p>
-        <p>Price: {{ product.price }}</p>
-        <img [src]="product.imgUrl" alt="Product Image" />
-      </ng-template>
-      <ng-template matexpCardActions>
-        <!-- Add actions buttons or links -->
-        <button mat-button>Buy Now</button>
-      </ng-template>
-      <ng-template matexpCardFooter>
-        <!-- You can add any footer information here -->
-      </ng-template>
-    </matexp-card>
+  <matexp-card class="">
+    <ng-template matexpCardHeader>
+      <!-- Render product name or any other relevant information -->
+      <h2>{{ product.name }}</h2>
+    </ng-template>
+    <ng-template matexpCardContent>
+      <!-- Render product description, price, image, etc. -->
+      <p>Description: {{ product.description }}</p>
+      <p>Price: {{ product.price }}</p>
+      <img [src]="product.imgUrl" alt="Product Image" />
+    </ng-template>
+    <ng-template matexpCardActions>
+      <!-- Add actions buttons or links -->
+      <button mat-button>Buy Now</button>
+    </ng-template>
+    <ng-template matexpCardFooter>
+      <!-- You can add any footer information here -->
+    </ng-template>
+  </matexp-card>
 </div>

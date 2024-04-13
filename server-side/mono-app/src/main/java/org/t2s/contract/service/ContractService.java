@@ -25,7 +25,7 @@ public class ContractService implements TServiceCRUD<Long, ContractDto, Contract
 				.endDate(contractdto.getEndDate())
 				.beginDate(contractdto.getBeginDate())
 				.lendingPrice(contractdto.getLendingPrice())
-				.product(contractdto.getProduct())
+//				.product(contractdto.getProduct())
 				.build();
 		log.info("Inserted value into contract_db: {}", model);
 		this.repository.save(model);
@@ -40,7 +40,6 @@ public class ContractService implements TServiceCRUD<Long, ContractDto, Contract
 							.endDate(contractModel.getEndDate())
 							.beginDate(contractModel.getBeginDate())
 							.lendingPrice(contractModel.getLendingPrice())
-							.product(contractModel.getProduct())
 							.build())
 				 .collect(Collectors.toList());
 	}
@@ -61,7 +60,7 @@ public class ContractService implements TServiceCRUD<Long, ContractDto, Contract
 		Optional<ContractModel> optionalModel = repository.findById(id);
 		if (optionalModel.isPresent()) {
 			ContractModel existingModel = optionalModel.get();
-			BeanUtils.copyProperties(contractmodel, existingModel, "id");
+			BeanUtils.copyProperties(existingModel, contractmodel, "id");
 			repository.save(existingModel);
 			return true;
 		}

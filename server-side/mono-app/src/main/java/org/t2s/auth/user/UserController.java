@@ -8,8 +8,7 @@ import java.security.Principal;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/t2s/v1/user/users")
-@CrossOrigin("http://localhost:4200")
+@RequestMapping("/t2s/v1/user")
 public class UserController {
     private final UserService service;
 
@@ -20,5 +19,19 @@ public class UserController {
     ) {
         this.service.changePassword(request, connectedUser);
         return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping(path="/products")
+    public ResponseEntity<?> changeProducts(
+            @RequestBody ChangeProductsRequest request,
+            Principal connectedUser
+    ) {
+        this.service.changeProducts(request, connectedUser);
+        return ResponseEntity.ok("Patched fine!");
+    }
+
+    @GetMapping(path="/{email}")
+    public ResponseEntity<User> getUserByAccessToken(@PathVariable("email") String email) {
+        return ResponseEntity.ok(this.service.getUserByEmail(email));
     }
 }

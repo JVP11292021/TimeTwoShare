@@ -2,6 +2,8 @@ package org.t2s.product;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.restframework.web.annotations.markers.CompilationComponent;
 import org.restframework.web.core.templates.ModelFrame;
 import org.t2s.contract.ContractModel;
@@ -29,12 +31,16 @@ public class ProductModel extends ModelFrame<Long> {
 
 	private boolean isLent;
 
+	@Column(length = 30000)
 	private String imgUrl;
 
-	@OneToOne(mappedBy = "product")
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "contract_id")
 	private ContractModel contract;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JoinColumn(name = "product_id")
 	private List<ReviewModel> reviews;
 
 }

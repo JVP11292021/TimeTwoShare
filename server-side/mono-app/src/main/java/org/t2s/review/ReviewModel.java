@@ -22,8 +22,4 @@ public class ReviewModel extends ModelFrame<Long> {
 
 	private String reviewText;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "product_id")
-	private ProductModel product;
-
 }

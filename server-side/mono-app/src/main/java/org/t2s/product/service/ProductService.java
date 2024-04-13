@@ -30,8 +30,8 @@ public class ProductService implements TServiceCRUD<Long, ProductDto, ProductMod
 				.reviews(productdto.getReviews())
 				.build();
 
-		log.info("Inserted value into product_db: {}", model);
 		this.repository.save(model);
+		log.info("Inserted value into product_db: {}", model);
 		return 1;
 	}
 	@Override
@@ -67,8 +67,9 @@ public class ProductService implements TServiceCRUD<Long, ProductDto, ProductMod
 		Optional<ProductModel> optionalModel = repository.findById(id);
 		if (optionalModel.isPresent()) {
 			ProductModel existingModel = optionalModel.get();
-			BeanUtils.copyProperties(productmodel, existingModel, "id");
+			BeanUtils.copyProperties(productmodel, existingModel, "id", "name", "price","description", "imgUrl");
 			repository.save(existingModel);
+			log.info("Updated value: {} with id: {}", existingModel, id);
 			return true;
 		}
 		return false;

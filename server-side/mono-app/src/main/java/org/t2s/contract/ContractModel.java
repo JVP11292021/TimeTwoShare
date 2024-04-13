@@ -27,9 +27,5 @@ public class ContractModel extends ModelFrame<Long> {
 
 	private double lendingPrice;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "product_id", referencedColumnName = "id")
-	private ProductModel product;
-
 	// TODO add some sort of relation betweem this table and the t_user table
 }

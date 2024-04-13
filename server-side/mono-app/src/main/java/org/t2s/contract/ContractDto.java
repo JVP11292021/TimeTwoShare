@@ -19,6 +19,4 @@ public class ContractDto extends DtoFrame {
 	private Date endDate;
 
 	private double lendingPrice;
-
-	private ProductModel product;
 }

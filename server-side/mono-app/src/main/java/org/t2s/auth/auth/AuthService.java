@@ -17,8 +17,14 @@ import org.t2s.auth.token.TokenRepo;
 import org.t2s.auth.token.TokenType;
 import org.t2s.auth.user.User;
 import org.t2s.auth.user.UserRepo;
+import org.t2s.product.ProductModel;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -32,12 +38,27 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
+        List<ProductModel> products = Optional.ofNullable(request.getProducts())
+                .map(productDtos -> productDtos.stream()
+                        .map(productDto -> ProductModel.builder()
+                                .name(productDto.getName())
+                                .price(productDto.getPrice())
+                                .description(productDto.getDescription())
+                                .imgUrl(productDto.getImgUrl())
+                                .isLent(productDto.isLent())
+                                .contract(productDto.getContract())
+                                .reviews(productDto.getReviews())
+                                .build())
+                        .collect(Collectors.toList()))
+                .orElse(Collections.emptyList());
+
         var user = User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
                 .email(request.getEmail())
                 .password(this.encoder.encode(request.getPassword()))
                 .role(request.getRole())
+                .products(products)
                 .build();
         var savedUser = this.userRepo.save(user);
         var jwtToken = jwtService.generateToken(user);

@@ -11,7 +11,6 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/t2s/v1/auth")
-@CrossOrigin("http://localhost:4200")
 public class AuthenticationController {
 
     private final AuthService authService;

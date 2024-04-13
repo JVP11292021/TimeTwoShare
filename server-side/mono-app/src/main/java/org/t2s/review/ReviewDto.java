@@ -15,7 +15,4 @@ public class ReviewDto extends DtoFrame {
 	private int rating;
 
 	private String reviewText;
-
-	private ProductModel product;
-
 }

@@ -24,7 +24,6 @@ public class ReviewService implements TServiceCRUD<Long, ReviewDto, ReviewModel>
 		ReviewModel model = ReviewModel.builder()
 				.reviewText(reviewdto.getReviewText())
 				.rating(reviewdto.getRating())
-				.product(reviewdto.getProduct())
 				.build();
 		this.repository.save(model);
 		log.info("Inserted value into review_db: {}", model);
@@ -38,7 +37,6 @@ public class ReviewService implements TServiceCRUD<Long, ReviewDto, ReviewModel>
 				 .map(reviewModel -> ReviewDto.builder()
 						 .reviewText(reviewModel.getReviewText())
 						 .rating(reviewModel.getRating())
-						 .product(reviewModel.getProduct())
 						 .build())
 				 .collect(Collectors.toList());
 	}

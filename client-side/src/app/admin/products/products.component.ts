@@ -29,14 +29,6 @@ export class ProductsComponent implements OnInit {
   ngOnInit(): void {
     this.loadAllProducts();
     this.products$.subscribe((res) => console.log(res));
-    this.productService.store({
-      name: " ",
-      description: " ",
-      imgUrl: " ",
-      isLent: false,
-      price: 0.1,
-      reviews: []
-    }).subscribe((res) => console.log(res))
   }
 
   loadAllProducts() {
