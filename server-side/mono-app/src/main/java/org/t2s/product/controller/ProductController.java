@@ -1,5 +1,6 @@
 package org.t2s.product.controller;
 
+import org.t2s.contract.ContractDto;
 import org.t2s.product.*;
 import org.t2s.product.service.*;
 import lombok.*;
@@ -7,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.*;
 import org.restframework.web.core.templates.*;
 import org.restframework.web.annotations.markers.*;
-import java.util.*;
+import org.t2s.review.ReviewDto;
 
 @CompilationComponent
 @Data
@@ -27,8 +28,16 @@ public class ProductController implements TControllerEntityResponseWildcard<Long
 		 return ResponseEntity.ok(productService.getAll());
 	}
 	@GetMapping(path="/{name}")
-	public ResponseEntity<Boolean> isProductLent(@PathVariable("name") String name) {
-		return ResponseEntity.ok(productService.isLent(name));
+	public ResponseEntity<?> getByName(@PathVariable("name") String name) {
+		return ResponseEntity.ok(productService.getByName(name));
+	}
+	@PatchMapping(path="/contract/{name}")
+	public ResponseEntity<Boolean> updateContract(@PathVariable("name") String name, @RequestBody ContractDto contract) {
+		return ResponseEntity.ok(productService.updateContract(name, contract));
+	}
+	@PatchMapping(path="/review/{name}")
+	public ResponseEntity<Boolean> updateReview(@PathVariable("name") String name, @RequestBody ReviewDto review) {
+		return ResponseEntity.ok(productService.updateReview(name, review));
 	}
 	@Override
 	@DeleteMapping(path="/{id}")

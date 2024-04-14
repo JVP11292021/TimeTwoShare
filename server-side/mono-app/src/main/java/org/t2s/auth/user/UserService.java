@@ -5,12 +5,14 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.t2s.auth.token.TokenRepo;
 import org.t2s.product.ProductDto;
 import org.t2s.product.ProductModel;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -52,5 +54,49 @@ public class UserService {
                         .reviews(productDto.getReviews())
                         .build());
         this.repo.save(user);
+    }
+
+    public List<ProductDto> getAllOwnedProducts(Principal connectedUser) {
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+        return user.getProducts()
+                .stream()
+                .map(productModel -> ProductDto.builder()
+                        .name(productModel.getName())
+                        .price(productModel.getPrice())
+                        .description(productModel.getDescription())
+                        .imgUrl(productModel.getImgUrl())
+                        .isLent(productModel.isLent())
+                        .contract(productModel.getContract())
+                        .reviews(productModel.getReviews())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    public List<?> getAllUsers() {
+        List<User> users = this.repo.findAll();
+        List<UserDto> editedUsers = new ArrayList<>();
+
+        for (User user : users) {
+            List<ProductDto> productDTOs = user.getProducts().stream()
+                    .map(product -> ProductDto.builder()
+                            .name(product.getName())
+                            .description(product.getDescription())
+                            .isLent(product.isLent())
+                            .reviews(product.getReviews())
+                            .contract(product.getContract())
+                            .price(product.getPrice())
+                            .build()
+                    )
+                    .collect(Collectors.toList());
+
+            editedUsers.add(UserDto.builder()
+                            .id(user.getId())
+                            .firstname(user.getFirstname())
+                            .lastname(user.getLastname())
+                            .products(productDTOs)
+                    .build());
+        }
+
+        return editedUsers;
     }
 }

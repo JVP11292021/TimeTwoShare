@@ -10,11 +10,15 @@ import { MaterialExpandedModule } from './shared/material/material-expanded.modu
 import { MaterialModule } from './shared/material/material.module';
 import { ProductPopUpComponent } from './admin/products/product-pop-up.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ContractPopUpComponent } from './admin/products/contract-pop-up.component';
+import { MoreInfoPopUpComponent } from './admin/products/more-info-pop-up.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductPopUpComponent,
+    ContractPopUpComponent,
+    MoreInfoPopUpComponent,
   ],
   imports: [
     BrowserModule,

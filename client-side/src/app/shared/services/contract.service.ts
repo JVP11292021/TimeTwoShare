@@ -1,13 +1,20 @@
 import { inject, Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpService } from './http.service';
-import { Product } from './product.service';
 
 export type Contract = {
   beginDate: Date;
   endDate: Date;
   lendingPrice: number;
-  product: Product;
+}
+
+export function buildContract(group: FormGroup): Contract {
+  return {
+    beginDate: group.value.beginDate,
+    endDate: group.value.endDate,
+    lendingPrice: group.value.lendingPrice,
+  };
 }
 
 @Injectable({

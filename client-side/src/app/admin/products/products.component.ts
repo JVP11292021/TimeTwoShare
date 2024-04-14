@@ -4,9 +4,12 @@ import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MaterialExpandedModule } from 'src/app/shared/material/material-expanded.module';
 import { MaterialModule } from 'src/app/shared/material/material.module';
+import { buildContract } from 'src/app/shared/services/contract.service';
 import { PopUpService } from 'src/app/shared/services/pop-up.service';
-import { Product, build, ProductService } from 'src/app/shared/services/product.service';
+import { Product, buildProduct, ProductService } from 'src/app/shared/services/product.service';
 import { UserService } from 'src/app/shared/services/user.service';
+import { ContractPopUpComponent } from './contract-pop-up.component';
+import { MoreInfoPopUpComponent } from './more-info-pop-up.component';
 import { ProductPopUpComponent } from './product-pop-up.component';
 
 @Component({
@@ -33,6 +36,7 @@ export class ProductsComponent implements OnInit {
   ngOnInit(): void {
     this.loadAllProducts();
     this.products$.subscribe((res) => console.log(res));
+    this.userService.getAll().subscribe((res) => console.log(res));
   }
 
   loadAllProducts() {
@@ -40,8 +44,20 @@ export class ProductsComponent implements OnInit {
   }
 
   openProductPopUp() {
-    var popup = this.popUpService.openPopup({service: this.userService, build: build}, ProductPopUpComponent)
+    var popup = this.popUpService.openPopup({service: this.userService, build: buildProduct}, ProductPopUpComponent)
     popup.afterClosed()
-    .subscribe((res)=>console.log(res))
+    .subscribe((res)=>console.log(res));
+  }
+
+  openContractPopUp(name: string) {
+    var popup = this.popUpService.openPopup({service: this.productService, build: buildContract, productName: name}, ContractPopUpComponent)
+    popup.afterClosed()
+    .subscribe((res) => console.log(res));
+  }
+
+  openMoreInfoPopUp() {
+    var popup = this.popUpService.openPopup<any>({}, MoreInfoPopUpComponent)
+    popup.afterClosed()
+    .subscribe((res) => console.log(res));
   }
 }

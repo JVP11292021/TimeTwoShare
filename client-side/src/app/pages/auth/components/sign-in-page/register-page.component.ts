@@ -58,7 +58,7 @@ export class RegisterPageComponent {
       .subscribe((response) => {
         this.storage.saveData(ACCESS_TOKEN_STORED_NAME, response.access_token);
         this.storage.saveData(REFRESH_TOKEN_STORED_NAME, response.refresh_token);
-        this.navigateToLogin();
+        this.router.navigateByUrl("/admin");
       });
     }
   }

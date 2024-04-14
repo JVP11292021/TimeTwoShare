@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.t2s.product.ProductDto;
 
 import java.security.Principal;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -29,6 +30,16 @@ public class UserController {
     ) {
         this.service.changeProducts(productDto, connectedUser);
         return ResponseEntity.ok(1);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<?>> getAll() {
+        return ResponseEntity.ok(this.service.getAllUsers());
+    }
+
+    @GetMapping(path="/owned")
+    public ResponseEntity<List<ProductDto>> getAllOwnedUserProducts(Principal connectedUser) {
+        return ResponseEntity.ok(this.service.getAllOwnedProducts(connectedUser));
     }
 
     @GetMapping(path="/{email}")

@@ -2,12 +2,17 @@ package org.t2s.product.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.t2s.contract.ContractDto;
+import org.t2s.contract.ContractModel;
 import org.t2s.product.*;
 import org.t2s.product.repository.*;
 import lombok.*;
 import org.springframework.stereotype.Service;
 import org.restframework.web.core.templates.*;
 import org.restframework.web.annotations.markers.*;
+import org.t2s.review.ReviewDto;
+import org.t2s.review.ReviewModel;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -75,8 +80,44 @@ public class ProductService implements TServiceCRUD<Long, ProductDto, ProductMod
 		return false;
 	}
 
-	public Boolean isLent(String name) {
+	public ProductModel getByName(String name) {
 		Optional<ProductModel> model = this.repository.findByName(name);
-        return model.map(ProductModel::isLent).orElse(false);
+        return model
+				.orElse(null);
     }
+
+	public Boolean updateContract(String name, ContractDto contract) {
+		log.info("Starting update of product:{} contract:{}", name, contract);
+		ProductModel model = this.getByName(name);
+		if (model != null) {
+			model.setContract(ContractModel.builder()
+							.beginDate(contract.getBeginDate())
+							.endDate(contract.getEndDate())
+							.lendingPrice(contract.getLendingPrice())
+					.build());
+			model.setLent(!model.isLent());
+			this.repository.save(model);
+			log.info("Updated model: {}", model);
+			return true;
+		}
+
+		return false;
+	}
+
+	public Boolean updateReview(String name, ReviewDto review) {
+		log.info("Starting update of product:{} review:{}", name, review);
+		ProductModel model = this.getByName(name);
+		if (model != null) {
+			model.getReviews()
+					.add(ReviewModel.builder()
+							.rating(review.getRating())
+							.reviewText(review.getReviewText())
+							.build());
+			this.repository.save(model);
+			log.info("Updated model: {}", model);
+			return true;
+		}
+
+		return false;
+	}
 }

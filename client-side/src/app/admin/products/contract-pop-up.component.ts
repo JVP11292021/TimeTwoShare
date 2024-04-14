@@ -4,29 +4,28 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-product-pop-up',
+  selector: 'app-contract-pop-up',
   template: `
     <form [formGroup]="group" (ngSubmit)="save()">
-      <h1 mat-dialog-title>Add product to lend</h1>
+      <h1 mat-dialog-title>Lend a product</h1>
       <div mat-dialog-content>
         <mat-form-field>
-          <mat-label>Name:</mat-label>
-          <input matInput type="text" formControlName="name">
+          <mat-label>Begin Date:</mat-label>
+          <input matInput [matDatepicker]="beginDatepicker" formControlName="beginDate">
+          <mat-datepicker-toggle matSuffix [for]="beginDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #beginDatepicker></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Description:</mat-label>
-          <input matInput type=text id="description" formControlName="description">
+          <mat-label>End Date:</mat-label>
+          <input matInput [matDatepicker]="endDatepicker" formControlName="endDate">
+          <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #endDatepicker></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Price:</mat-label>
-          <input matInput type="number" formControlName="price">
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Image URL:</mat-label>
-          <input matInput type="text" formControlName="imgUrl">
+          <mat-label>Lending Price:</mat-label>
+          <input matInput type="number" formControlName="lendingPrice">
         </mat-form-field>
       </div>
 
@@ -39,18 +38,18 @@ import { Observable } from 'rxjs';
   styles: [
   ]
 })
-export class ProductPopUpComponent <
+export class ContractPopUpComponent <
 Model,
  T extends {
   service: {
-    popup: (object: Model) => Observable<unknown>
+    popup: (...args: any[]) => Observable<unknown>
   }
   build: (form: FormGroup) => Model 
 }> implements OnInit {
 
   private fb = inject(FormBuilder);
   private dialogData = inject(MAT_DIALOG_DATA);
-  private ref = inject(MatDialogRef<ProductPopUpComponent<Model, T>>)
+  private ref = inject(MatDialogRef<ContractPopUpComponent<Model, T>>)
 
   private inputData!: T;
   public group!: FormGroup;
@@ -58,11 +57,9 @@ Model,
   ngOnInit(): void {
     this.inputData = this.dialogData;
     this.group = this.fb.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      price: ['', Validators.required],
-      isLent: ['', Validators.required],
-      imgUrl: [''],
+      beginDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+      lendingPrice: ['', Validators.required]
     })
   }
 
@@ -76,11 +73,11 @@ Model,
   }
 
   public save(): void {
-    this.inputData.service.popup(this.inputData.build(this.group))
-      .subscribe((res: unknown) => {
-        this.closepopup(res);
-      });
+    if ('productName' in this.inputData && this.inputData.productName != null) {
+      this.inputData.service.popup(this.inputData.productName, this.inputData.build(this.group))
+        .subscribe((res: unknown) => {
+          this.closepopup(res);
+        });
+    }
   }
 }
-
-// "Http failure response for http://localhost:8081/t2s/v1/user/products: 400 OK"

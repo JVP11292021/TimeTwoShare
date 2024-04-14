@@ -38,7 +38,7 @@ public class ProductModel extends ModelFrame<Long> {
 	@JoinColumn(name = "contract_id")
 	private ContractModel contract;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name = "product_id")
 	private List<ReviewModel> reviews;
