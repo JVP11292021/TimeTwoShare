@@ -37,11 +37,6 @@ public class UserController {
         return ResponseEntity.ok(this.service.getAllUsers());
     }
 
-    @GetMapping(path="/owned")
-    public ResponseEntity<List<ProductDto>> getAllOwnedUserProducts(Principal connectedUser) {
-        return ResponseEntity.ok(this.service.getAllOwnedProducts(connectedUser));
-    }
-
     @GetMapping(path="/{email}")
     public ResponseEntity<User> getUserByAccessToken(@PathVariable("email") String email) {
         return ResponseEntity.ok(this.service.getUserByEmail(email));

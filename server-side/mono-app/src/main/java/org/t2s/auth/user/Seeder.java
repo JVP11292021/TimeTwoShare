@@ -5,11 +5,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.t2s.auth.auth.AuthService;
 import org.t2s.auth.auth.RegisterRequest;
-import org.t2s.contract.ContractModel;
 import org.t2s.product.ProductDto;
 import org.t2s.review.ReviewModel;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

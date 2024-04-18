@@ -56,22 +56,6 @@ public class UserService {
         this.repo.save(user);
     }
 
-    public List<ProductDto> getAllOwnedProducts(Principal connectedUser) {
-        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
-        return user.getProducts()
-                .stream()
-                .map(productModel -> ProductDto.builder()
-                        .name(productModel.getName())
-                        .price(productModel.getPrice())
-                        .description(productModel.getDescription())
-                        .imgUrl(productModel.getImgUrl())
-                        .isLent(productModel.isLent())
-                        .contract(productModel.getContract())
-                        .reviews(productModel.getReviews())
-                        .build())
-                .collect(Collectors.toList());
-    }
-
     public List<?> getAllUsers() {
         List<User> users = this.repo.findAll();
         List<UserDto> editedUsers = new ArrayList<>();
