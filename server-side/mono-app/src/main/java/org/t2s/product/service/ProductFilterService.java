@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.t2s.auth.user.User;
-import org.t2s.auth.user.UserRepo;
 import org.t2s.product.ProductDto;
 import org.t2s.product.repository.ProductRepository;
 
@@ -16,7 +15,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProductFilterService {
 
-    private final UserRepo userRepo;
     private final ProductRepository productRepo;
 
     public List<ProductDto> getAllProductsWithReviews() {
