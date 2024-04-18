@@ -55,8 +55,8 @@ export class ProductsComponent implements OnInit {
     .subscribe((res) => console.log(res));
   }
 
-  openMoreInfoPopUp() {
-    var popup = this.popUpService.openPopup<any>({}, MoreInfoPopUpComponent)
+  openMoreInfoPopUp(product: Product) {
+    var popup = this.popUpService.openPopup<any>({model: product}, MoreInfoPopUpComponent)
     popup.afterClosed()
     .subscribe((res) => console.log(res));
   }
