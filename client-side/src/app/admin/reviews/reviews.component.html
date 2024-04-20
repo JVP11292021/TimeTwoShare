@@ -1,0 +1,22 @@
+<matexp-card class="app-card" style="width:60%;">
+    <ng-template matexpCardHeader>
+    </ng-template>
+    <ng-template matexpCardContent>
+    </ng-template>
+    <ng-template matexpCardActions>
+      <button mat-button color="primary"><mat-icon>note_add</mat-icon>Add Product</button>
+    </ng-template>
+    <ng-template matexpCardFooter>
+    </ng-template>
+</matexp-card>
+  
+  <mat-grid-list cols="5" rowHeight="600px">
+    <mat-grid-tile *ngFor="let reviews of (reviews$ | async)">
+      <mat-card class="app-card">
+        <mat-card-content>
+          <p>{{ reviews.reviewText }}</p>
+          <p>{{ reviews.rating }}</p>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>

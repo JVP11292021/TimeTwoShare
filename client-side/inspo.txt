@@ -1,0 +1,2 @@
+https://github.com/DMezhenskyi/angular-named-router-outlet/blob/master/src/app/app-routing.module.ts
+https://github.com/Bijaydhimal9/AngularAuth/blob/master/src/app/login/login.component.scss

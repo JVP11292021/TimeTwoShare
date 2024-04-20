@@ -1,0 +1,62 @@
+mat-card {
+  max-width: 600px;
+  margin: 2em auto;
+  text-align: center;
+  max-height: 600px;
+}
+
+.header{
+  text-align: center;
+
+}
+.full-width {
+  width: 80%;
+}
+
+.button-row {
+  padding-top: 5px;
+}
+
+.button-row a {
+  margin-right: 8px;
+  text-align: center;
+}
+
+.forget-password{
+  padding-left: 0px;
+}
+
+.emailInput{
+  padding-top: 10px;
+}
+
+.contentBody {
+  padding: 60px 1rem;
+  background :#1b6ca8;
+  display: block;
+}
+
+.aLink{
+  float: right;
+  padding-right: 60px;
+  text-decoration: none;
+}
+  
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.content-body {
+  min-height: 100%;
+  display: flex;
+  justify-content: center; /* Centering the content horizontally */
+  align-items: center; /* Centering the content vertically */
+  background: gray;
+}
+
+.center-body {
+  padding: 4% 2%; /* Adjust padding as needed */
+  max-width: 800px; /* Set maximum width for responsive design */
+  width: 70%; /* Ensure content takes full width */
+}

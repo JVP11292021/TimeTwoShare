@@ -1,0 +1,28 @@
+version: '3'
+services:
+  app:
+    container_name: t2s-be-app
+    build:
+      context: ./mono-app
+      dockerfile: Dockerfile
+    ports:
+      - "8089:8081"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=PostEppie
+    restart: always
+  db:
+    ports:
+      - "5432:5432"
+    image: postgres
+    container_name: t2s-db
+    environment:
+      - POSTGRES_DB=time_two_share
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=PostEppie
+    volumes:
+      - C:\postgre_datapart:/var/lib/postgresql/data
+    restart: always

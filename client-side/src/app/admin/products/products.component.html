@@ -1,0 +1,42 @@
+<matexp-card class="app-card">
+  <ng-template matexpCardHeader>
+  </ng-template>
+  <ng-template matexpCardContent>
+  </ng-template>
+  <ng-template matexpCardActions>
+    <mat-form-field>
+      <mat-label>Filter Options</mat-label>
+      <select matNativeControl [(ngModel)]="option" (change)="filter()">
+        <optgroup label="Product">
+          <option value="AllProducts">All Products</option>
+          <option value="ByContract">Lended Products</option>
+          <option value="ByReviews">By Reviews</option>
+          <option value="OwnedProducts">Owned Products</option>
+        </optgroup>
+      </select>
+    </mat-form-field>
+    <button mat-button color="primary" (click)="openProductPopUp()"><mat-icon>note_add</mat-icon>Add Product</button>
+  </ng-template>
+  <ng-template matexpCardFooter>
+  </ng-template>
+</matexp-card>
+
+<mat-grid-list cols="3" rowHeight="400px">
+  <mat-grid-tile *ngFor="let product of (products$ | async)">
+    <mat-card class="app-card">
+      <div class="image-container">
+        <img mat-card-image class="image" [src]="product.imgUrl" [alt]="product.name">
+      </div>
+      <mat-card-content>
+        <h2>{{ product.name }}</h2>
+        <p>{{ product.description }} with a lending price of {{product.price | currency}}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button *ngIf="!product.lent && !isProductOwned(product)" (click)="openContractPopUp(product.name, product.price)">Lend Now</button>
+        <button mat-button *ngIf="product.lent && !isProductOwned(product)" (click)="openWarningPopUp(product.name)">Return Product</button>
+        <button mat-button *ngIf="!isProductOwned(product)" [disabled]="product.lent" (click)="openAddReviewPopUp(product.name)">Place Review</button>
+        <button mat-button (click)="openMoreInfoPopUp(product)">More Info</button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

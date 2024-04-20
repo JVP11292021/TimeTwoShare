@@ -16,9 +16,7 @@
     <version>1.0</version>
     <packaging>pom</packaging>
     <modules>
-        <module>micro</module>
-        <module>api-gateway</module>
-        <module>discovery-server</module>
+        <module>mono-app</module>
     </modules>
 
     <properties>

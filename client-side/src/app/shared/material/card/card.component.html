@@ -1,0 +1,49 @@
+<ng-template #defaultHeader>
+    <mat-card-title>Default title</mat-card-title>
+    <mat-card-subtitle>Default subtitle</mat-card-subtitle>
+</ng-template>
+
+<ng-template #defaultContent>
+    <p>Angular is an application-design framework and development platform.</p>
+</ng-template>
+
+<ng-template #defaultActions>
+    <button mat-button><mat-icon>thumb_up</mat-icon> Like</button>
+    <button mat-button><mat-icon>share</mat-icon> Share</button>
+</ng-template>
+
+<ng-template #defaultFooter></ng-template>
+
+<mat-card [class]="class">
+    <mat-card-header>
+        <ng-container
+        *ngTemplateOutlet="
+            header || defaultHeader;
+        "
+        ></ng-container>
+    </mat-card-header>
+    <div class="img">
+        <img *ngIf="imgSource" mat-card-sm-image [src]="imgSource"/>
+    </div>
+    <mat-card-content>
+        <ng-container
+        *ngTemplateOutlet="
+            content || defaultContent;
+        "
+        ></ng-container>
+    </mat-card-content>
+    <mat-card-actions>
+        <ng-container
+        *ngTemplateOutlet="
+            actions || defaultActions;
+        "
+        ></ng-container>
+    </mat-card-actions>
+    <mat-card-footer>
+        <ng-container
+        *ngTemplateOutlet="
+            footer || defaultFooter;
+        "
+        ></ng-container>
+    </mat-card-footer>
+</mat-card>
