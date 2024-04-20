@@ -35,6 +35,7 @@ import { WarningPopUpComponent } from './warning-pop-up.component';
 export class ProductsComponent implements OnInit {
   
   public products$!: Observable<Product[]>
+  public ownedProducts: Product[] = [];
   public option: string = '';
 
   private contractService = inject(ContractService);
@@ -50,6 +51,7 @@ export class ProductsComponent implements OnInit {
 
   loadAllProducts() {
     this.products$ = this.filterService.getAll();
+    this.loadOwnedProducts();
   }
 
   filter() {
@@ -70,15 +72,28 @@ export class ProductsComponent implements OnInit {
         this.products$ = this.filterService.getAll();
         break;
     }
-    this.products$.subscribe((res) => console.log(res));
+    this.loadOwnedProducts();
+  }
+
+  private loadOwnedProducts() {
+    this.filterService.getAllOwnedProducts()
+    .subscribe((res) => {
+      this.ownedProducts = res;
+    })
+  }
+
+  isProductOwned(product: Product): boolean {
+    return this.ownedProducts.some(p => p.name === product.name);
   }
 
   openProductPopUp() {
     var popup = this.popUpService.openPopup({service: this.userService, build: buildProduct}, ProductPopUpComponent)
     popup.afterClosed()
     .subscribe((res) => {
-      if (res == 1) 
+      if (res == 1) {
         this.products$ = this.filterService.getAll();
+        this.loadOwnedProducts();
+      }
     });
   }
 

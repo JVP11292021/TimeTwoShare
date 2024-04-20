@@ -8,6 +8,10 @@ export const adminRoutes: Routes = [
     component: HomePageComponent,
     children: [
       {
+        path: 'products',
+        component: ProductsComponent
+      },
+      {
         path: '',
         component: ProductsComponent
       }

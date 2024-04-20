@@ -21,18 +21,20 @@
   </ng-template>
 </matexp-card>
 
-<mat-grid-list cols="4" rowHeight="400px">
+<mat-grid-list cols="3" rowHeight="400px">
   <mat-grid-tile *ngFor="let product of (products$ | async)">
     <mat-card class="app-card">
-      <img mat-card-image class="image" [src]="product.imgUrl" [alt]="product.name">
+      <div class="image-container">
+        <img mat-card-image class="image" [src]="product.imgUrl" [alt]="product.name">
+      </div>
       <mat-card-content>
         <h2>{{ product.name }}</h2>
         <p>{{ product.description }} with a lending price of {{product.price | currency}}</p>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button *ngIf="!product.lent" (click)="openContractPopUp(product.name, product.price)">Lend Now</button>
-        <button mat-button *ngIf="product.lent" (click)="openWarningPopUp(product.name)">Return Product</button>
-        <button mat-button [disabled]="product.lent" (click)="openAddReviewPopUp(product.name)">Place Review</button>
+        <button mat-button *ngIf="!product.lent && !isProductOwned(product)" (click)="openContractPopUp(product.name, product.price)">Lend Now</button>
+        <button mat-button *ngIf="product.lent && !isProductOwned(product)" (click)="openWarningPopUp(product.name)">Return Product</button>
+        <button mat-button *ngIf="!isProductOwned(product)" [disabled]="product.lent" (click)="openAddReviewPopUp(product.name)">Place Review</button>
         <button mat-button (click)="openMoreInfoPopUp(product)">More Info</button>
       </mat-card-actions>
     </mat-card>
