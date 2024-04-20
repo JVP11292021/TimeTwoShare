@@ -17,11 +17,11 @@ export type Product = {
 
 export function buildProduct(group: FormGroup): Product {
   return {
-    name: group.value.name,
-    description: group.value.description,
-    price: group.value.price,
+    name: group.value?.name,
+    description: group.value?.description,
+    price: group.value?.price,
     isLent: false,
-    imgUrl: group.value.imgUrl,
+    imgUrl: group.value?.imgUrl,
     reviews: [],
     contract: null
   };
@@ -39,10 +39,6 @@ export class ProductService {
 
   store(product: Product) : Observable<number> {
     return this.httpService.request('http://localhost:8081/t2s/v1/product', 'POST', product);
-  }
-
-  getAll() : Observable<Product[]> {
-    return this.httpService.request('http://localhost:8081/t2s/v1/product', 'GET');
   }
 
   update(id: number, product: Product): Observable<boolean> {

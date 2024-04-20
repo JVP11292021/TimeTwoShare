@@ -11,9 +11,9 @@ export type Contract = {
 
 export function buildContract(group: FormGroup): Contract {
   return {
-    beginDate: group.value.beginDate,
-    endDate: group.value.endDate,
-    lendingPrice: group.value.lendingPrice,
+    beginDate: group.value?.beginDate,
+    endDate: group.value?.endDate,
+    lendingPrice: group.value?.lendingPrice,
   };
 }
 

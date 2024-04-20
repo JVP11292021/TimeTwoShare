@@ -12,7 +12,7 @@ import org.t2s.product.ProductModel;
 @NoArgsConstructor
 @Builder
 public class ReviewDto extends DtoFrame {
-	private int rating;
+	private double rating;
 
 	private String reviewText;
 }

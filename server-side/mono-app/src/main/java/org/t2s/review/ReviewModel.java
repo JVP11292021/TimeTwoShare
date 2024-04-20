@@ -18,7 +18,7 @@ public class ReviewModel extends ModelFrame<Long> {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
-	private int rating;
+	private double rating;
 
 	private String reviewText;
 

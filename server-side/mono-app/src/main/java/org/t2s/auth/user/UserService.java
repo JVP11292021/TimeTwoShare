@@ -22,15 +22,12 @@ public class UserService {
     private final UserRepo repo;
 
     public void changePassword(@NotNull ChangePasswordRequest request, Principal connectedUser) {
-
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
 
-        if (!this.encoder.matches(request.getCurrentPassword(), user.getPassword())) {
+        if (!this.encoder.matches(request.getCurrentPassword(), user.getPassword()))
             throw new IllegalStateException("Wrong password");
-        }
-        if (!request.getNewPassword().equals(request.getConfirmationPassword())) {
+        if (!request.getNewPassword().equals(request.getConfirmationPassword()))
             throw new IllegalStateException("Password are not the same");
-        }
 
         user.setPassword(this.encoder.encode(request.getNewPassword()));
         this.repo.save(user);
