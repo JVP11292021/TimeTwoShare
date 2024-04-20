@@ -3,6 +3,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 
+interface ContractData {
+  productPrice: number; 
+  productName: string; 
+  service: {
+    popup: (...args: any[]) => Observable<unknown>;
+  };
+  build: (form: FormGroup, ...args: any[]) => any;
+}
+
 @Component({
   selector: 'app-contract-pop-up',
   template: `
@@ -23,35 +32,38 @@ import { Observable } from 'rxjs';
           <mat-datepicker #endDatepicker></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>Lending Price:</mat-label>
-          <input matInput type="number" formControlName="lendingPrice">
-        </mat-form-field>
       </div>
 
-      <div mat-dialog-actions>
+      <br><div class="center">
+        <mat-label class="lending-price">Lending Price: {{inputData.productPrice | currency}} excluding shipping costs</mat-label>
+      </div>
+      
+      <div mat-dialog-actions class="justify-center">
           <button mat-raised-button type="submit" color="primary">Save</button>
           <a (click)="closepopup()" mat-raised-button color="warn">Close</a>
       </div>
     </form>
   `,
-  styles: [
-  ]
+  styles: [`
+    .center {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .lending-price {
+      font-size: 20px; 
+      font-weight: bold;
+      color: #fff;
+    }
+  `]
 })
-export class ContractPopUpComponent <
-Model,
- T extends {
-  service: {
-    popup: (...args: any[]) => Observable<unknown>
-  }
-  build: (form: FormGroup) => Model 
-}> implements OnInit {
+export class ContractPopUpComponent implements OnInit {
 
   private fb = inject(FormBuilder);
   private dialogData = inject(MAT_DIALOG_DATA);
-  private ref = inject(MatDialogRef<ContractPopUpComponent<Model, T>>)
+  private ref = inject(MatDialogRef<ContractPopUpComponent>)
 
-  private inputData!: T;
+  public inputData!: ContractData;
   public group!: FormGroup;
 
   ngOnInit(): void {
@@ -74,7 +86,7 @@ Model,
 
   public save(): void {
     if ('productName' in this.inputData && this.inputData.productName != null) {
-      this.inputData.service.popup(this.inputData.productName, this.inputData.build(this.group))
+      this.inputData.service.popup(this.inputData.productName, this.inputData.build(this.group, this.inputData.productPrice))
         .subscribe((res: unknown) => {
           this.closepopup(res);
         });

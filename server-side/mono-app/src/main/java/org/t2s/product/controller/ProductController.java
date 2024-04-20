@@ -35,6 +35,10 @@ public class ProductController implements TControllerEntityResponseWildcard<Long
 	public ResponseEntity<Boolean> updateContract(@PathVariable("name") String name, @RequestBody ContractDto contract) {
 		return ResponseEntity.ok(productService.updateContract(name, contract));
 	}
+	@DeleteMapping(path="/contract/{name}")
+	public ResponseEntity<Boolean> deleteContract(@PathVariable("name") String name) {
+		return ResponseEntity.ok(productService.deleteContract(name));
+	}
 	@PatchMapping(path="/review/{name}")
 	public ResponseEntity<Boolean> updateReview(@PathVariable("name") String name, @RequestBody ReviewDto review) {
 		return ResponseEntity.ok(productService.updateReview(name, review));

@@ -22,12 +22,18 @@ function rangeValidator(min: number, max: number) {
       <div mat-dialog-content>
         <mat-form-field>
           <mat-label>Description</mat-label>
-          <input matInput type="text" formControlName="reviewText">
+          <textarea matInput formControlName="reviewText"></textarea>
+          <mat-error *ngIf="group.get('reviewText')?.invalid && (group.get('reviewText')?.dirty || group.get('reviewText')?.touched)">
+            Description is required and should be at least 15 characters long.
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Rating</mat-label>
           <input matInput type="number" formControlName="rating">
+          <mat-error *ngIf="group.get('rating')?.invalid && (group.get('rating')?.dirty || group.get('rating')?.touched)">
+            Rating is required insert rating between 0 - 5.
+          </mat-error>
         </mat-form-field>
       </div>
 
@@ -52,7 +58,7 @@ Model,
 
   private fb = inject(FormBuilder);
   private dialogData = inject(MAT_DIALOG_DATA);
-  private ref = inject(MatDialogRef<ContractPopUpComponent<Model, T>>)
+  private ref = inject(MatDialogRef<ReviewPopUpComponent<Model, T>>)
 
   private inputData!: T;
   public group!: FormGroup;

@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContractPopUpComponent } from './admin/products/contract-pop-up.component';
 import { MoreInfoPopUpComponent } from './admin/products/more-info-pop-up.component';
 import { ReviewPopUpComponent } from './admin/products/review-pop-up.component';
+import { WarningPopUpComponent } from './admin/products/warning-pop-up.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ReviewPopUpComponent } from './admin/products/review-pop-up.component';
     ProductPopUpComponent,
     ContractPopUpComponent,
     MoreInfoPopUpComponent,
-    ReviewPopUpComponent
+    ReviewPopUpComponent,
+    WarningPopUpComponent
   ],
   imports: [
     BrowserModule,

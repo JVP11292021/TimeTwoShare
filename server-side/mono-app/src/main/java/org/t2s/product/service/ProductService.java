@@ -95,7 +95,7 @@ public class ProductService implements TServiceCRUD<Long, ProductDto, ProductMod
 							.endDate(contract.getEndDate())
 							.lendingPrice(contract.getLendingPrice())
 					.build());
-			model.setLent(!model.isLent());
+			model.setLent(true);
 			this.repository.save(model);
 			log.info("Updated model: {}", model);
 			return true;
@@ -115,6 +115,19 @@ public class ProductService implements TServiceCRUD<Long, ProductDto, ProductMod
 							.build());
 			this.repository.save(model);
 			log.info("Updated model: {}", model);
+			return true;
+		}
+
+		return false;
+	}
+
+	public Boolean deleteContract(String name) {
+		log.info("Starting deleting of product:{} contract", name);
+		ProductModel model = this.getByName(name);
+		if (model != null) {
+			model.setContract(null);
+			model.setLent(false);
+			this.repository.save(model);
 			return true;
 		}
 

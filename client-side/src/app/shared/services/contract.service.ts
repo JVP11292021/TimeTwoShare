@@ -9,11 +9,11 @@ export type Contract = {
   lendingPrice: number;
 }
 
-export function buildContract(group: FormGroup): Contract {
+export function buildContract(group: FormGroup, price: number): Contract {
   return {
     beginDate: group.value?.beginDate,
     endDate: group.value?.endDate,
-    lendingPrice: group.value?.lendingPrice,
+    lendingPrice: price,
   };
 }
 
@@ -41,4 +41,8 @@ export class ContractService {
   removeById(id: number): Observable<boolean> {
     return this.httpService.request(`http://localhost:8081/t2s/v1/contract/${id}`, 'DELETE');
   }
+
+  removeContract(name: NamedCurve): Observable<boolean> {
+    return this.httpService.request(`http://localhost:8081/t2s/v1/product/contract/${name}`, 'DELETE');
+  } 
 }

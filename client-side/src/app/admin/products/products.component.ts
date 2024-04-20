@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MaterialExpandedModule } from 'src/app/shared/material/material-expanded.module';
 import { MaterialModule } from 'src/app/shared/material/material.module';
-import { buildContract } from 'src/app/shared/services/contract.service';
+import { buildContract, ContractService } from 'src/app/shared/services/contract.service';
 import { PopUpService } from 'src/app/shared/services/pop-up.service';
 import { Product, buildProduct, ProductService } from 'src/app/shared/services/product.service';
 import { UserService } from 'src/app/shared/services/user.service';
@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterService } from 'src/app/shared/services/filter.service';
 import { ReviewPopUpComponent } from './review-pop-up.component';
 import { buildReview, ReviewService } from 'src/app/shared/services/review.service';
+import { WarningPopUpComponent } from './warning-pop-up.component';
 
 @Component({
   selector: 'app-products',
@@ -36,6 +37,7 @@ export class ProductsComponent implements OnInit {
   public products$!: Observable<Product[]>
   public option: string = '';
 
+  private contractService = inject(ContractService);
   private reviewService = inject(ReviewService);
   private productService = inject(ProductService);
   private popUpService = inject(PopUpService);
@@ -68,6 +70,7 @@ export class ProductsComponent implements OnInit {
         this.products$ = this.filterService.getAll();
         break;
     }
+    this.products$.subscribe((res) => console.log(res));
   }
 
   openProductPopUp() {
@@ -79,8 +82,13 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  openContractPopUp(name: string) {
-    var popup = this.popUpService.openPopup({service: this.productService, build: buildContract, productName: name}, ContractPopUpComponent)
+  openContractPopUp(name: string, price: number) {
+    var popup = this.popUpService.openPopup({
+      service: this.productService,
+      build: buildContract,
+      productName: name,
+      productPrice: price
+    }, ContractPopUpComponent)
     popup.afterClosed()
     .subscribe((res) => {
       if (res) 
@@ -89,14 +97,29 @@ export class ProductsComponent implements OnInit {
   }
 
   openAddReviewPopUp(name: string) {
-    var popup = this.popUpService.openPopup({service: this.reviewService, build: buildReview, productName: name}, ReviewPopUpComponent)
+    var popup = this.popUpService.openPopup({
+      service: this.reviewService,
+      build: buildReview,
+      productName: name
+    }, ReviewPopUpComponent)
     popup.afterClosed()
-    .subscribe();
+    .subscribe((res) => {
+      if (res)
+        this.products$ = this.filterService.getAll();
+    });
   }
 
   openMoreInfoPopUp(product: Product) {
     var popup = this.popUpService.openPopup<any>({model: product}, MoreInfoPopUpComponent)
     popup.afterClosed().subscribe();
+  }
+
+  openWarningPopUp(name: string) {
+    var popup = this.popUpService.openPopup<any>({service: this.contractService, name: name}, WarningPopUpComponent)
+    popup.afterClosed().subscribe((res) => {
+      if (res)
+        this.products$ = this.filterService.getAll();
+    });
   }
 
 }

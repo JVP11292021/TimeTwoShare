@@ -9,7 +9,7 @@ export type Product = {
   name: NamedCurve;
   description: NamedCurve;
   price: number;
-  isLent: boolean;
+  lent: boolean;
   imgUrl: NamedCurve;
   reviews: Review[];
   contract: Contract | null;
@@ -20,7 +20,7 @@ export function buildProduct(group: FormGroup): Product {
     name: group.value?.name,
     description: group.value?.description,
     price: group.value?.price,
-    isLent: false,
+    lent: false,
     imgUrl: group.value?.imgUrl,
     reviews: [],
     contract: null
@@ -52,7 +52,6 @@ export class ProductService {
   getByName(name: NamedCurve): Observable<boolean> {
     return this.httpService.request(`http://localhost:8081/t2s/v1/product/${name}`, 'GET');
   }
-
 
   popup(name: NamedCurve, contract: Contract): Observable<boolean> {
     return this.httpService.request(`http://localhost:8081/t2s/v1/product/contract/${name}`, 'PATCH', contract);

@@ -16,7 +16,7 @@ export class PopUpService {
     service: {
       popup: (...args: any[]) => Observable<unknown>
     },
-    build: (form: FormGroup) => any 
+    build: (form: FormGroup, ...args: any[]) => any 
   }>(ctx: TContext, component: any) {
     return this._dialog.open(component, {
       width: '40%',
