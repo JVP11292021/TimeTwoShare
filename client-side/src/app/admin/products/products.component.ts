@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
 import { MaterialExpandedModule } from 'src/app/shared/material/material-expanded.module';
 import { MaterialModule } from 'src/app/shared/material/material.module';
 import { buildContract, ContractService } from 'src/app/shared/services/contract.service';
@@ -16,6 +16,7 @@ import { FilterService } from 'src/app/shared/services/filter.service';
 import { ReviewPopUpComponent } from './review-pop-up.component';
 import { buildReview, ReviewService } from 'src/app/shared/services/review.service';
 import { WarningPopUpComponent } from './warning-pop-up.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @Component({
   selector: 'app-products',
@@ -30,11 +31,12 @@ import { WarningPopUpComponent } from './warning-pop-up.component';
     MaterialModule,
     RouterModule,
     MaterialModule,
+    FlexLayoutModule,
   ]
 })
 export class ProductsComponent implements OnInit {
   
-  public products$!: Observable<Product[]>
+  public products$!: Observable<Product[] | null>;
   public ownedProducts: Product[] = [];
   public option: string = '';
 
@@ -75,11 +77,32 @@ export class ProductsComponent implements OnInit {
     this.loadOwnedProducts();
   }
 
+  search(name: string) {
+    console.log(name);
+    if (name.trim() === '') {
+      this.loadAllProducts();
+      return;
+    }
+  
+    this.products$ = this.productService.getByName(name)
+    .pipe(
+      switchMap(products => {
+        if (products[0] === null) return this.filterService.getAll();
+        else return of(products);
+      })
+    );
+  }
+  
+
   private loadOwnedProducts() {
     this.filterService.getAllOwnedProducts()
     .subscribe((res) => {
       this.ownedProducts = res;
     })
+  }
+
+  getGridColumns() {
+    return window.innerWidth <= 768 ? 1 : 3;
   }
 
   isProductOwned(product: Product): boolean {

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Contract } from './contract.service';
 import { HttpService } from './http.service';
 import { Review } from './review.service';
@@ -49,8 +49,11 @@ export class ProductService {
     return this.httpService.request(`http://localhost:8081/t2s/v1/product/${id}`, 'DELETE');
   }
 
-  getByName(name: NamedCurve): Observable<boolean> {
-    return this.httpService.request(`http://localhost:8081/t2s/v1/product/${name}`, 'GET');
+  getByName(name: string): Observable<Product[]> {
+    return this.httpService.request<any, Product>(`http://localhost:8081/t2s/v1/product/${name}`, 'GET')
+    .pipe(
+      map((product: Product) => [product]) // Wrap single product in an array
+    );
   }
 
   popup(name: NamedCurve, contract: Contract): Observable<boolean> {

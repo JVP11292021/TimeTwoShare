@@ -4,6 +4,7 @@
   <ng-template matexpCardContent>
   </ng-template>
   <ng-template matexpCardActions>
+    <button mat-button color="primary" (click)="openProductPopUp()" fxHide.lt-md><mat-icon>note_add</mat-icon>Add Product</button>
     <mat-form-field>
       <mat-label>Filter Options</mat-label>
       <select matNativeControl [(ngModel)]="option" (change)="filter()">
@@ -15,14 +16,24 @@
         </optgroup>
       </select>
     </mat-form-field>
-    <button mat-button color="primary" (click)="openProductPopUp()"><mat-icon>note_add</mat-icon>Add Product</button>
+    <div class="action-buttons" fxLayout="row" fxLayoutAlign="end center">
+      <div class="search-bar" fxFlex="50" fxFlex.lt-md="100">
+        <mat-form-field>
+          <input matInput placeholder="Search" #searchInput>
+        </mat-form-field>
+        <button mat-icon-button color="primary" (click)="search(searchInput.value)">
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+    </div>
   </ng-template>
   <ng-template matexpCardFooter>
   </ng-template>
 </matexp-card>
 
-<mat-grid-list cols="3" rowHeight="400px">
-  <mat-grid-tile *ngFor="let product of (products$ | async)">
+
+<mat-grid-list [cols]="getGridColumns()" rowHeight="400px">
+  <mat-grid-tile *ngFor="let product of (products$ | async) as allProducts">
     <mat-card class="app-card">
       <div class="image-container">
         <img mat-card-image class="image" [src]="product.imgUrl" [alt]="product.name">
